@@ -29,3 +29,24 @@ To create the new database use the following command.
 ```
 createdb -O postgres eduk_db
 ```
+
+## Try connecting user to Database
+
+```
+psql eduk_db -U eduk
+```
+
+If you get:
+``` 
+"FATAL: Peer authentication failed for user "eduk""
+```
+
+Go to file "pg\_hba.conf" and change
+```
+local   all              all                                     peer
+```
+
+to
+
+```
+local   all              all                                     trust
