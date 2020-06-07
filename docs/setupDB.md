@@ -32,6 +32,8 @@ createdb -O postgres eduk_db
 
 ## Try connecting user to Database
 
+To connect to the "eduk\_db" database with the eduk user, run:
+
 ```
 psql eduk_db -U eduk
 ```
