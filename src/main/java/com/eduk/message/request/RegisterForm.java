@@ -58,13 +58,5 @@ public class RegisterForm {
         this.password = password;
     }
 
-    public Set<String> getInstitution() {
-        return this.role;
-    }
-
-    public void setInstitution(Set<String> role) {
-        this.role = role;
-    }
-
 }
 

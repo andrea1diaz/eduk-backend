@@ -48,7 +48,7 @@ public class User extends TimestampedEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Institution> institutions= new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
@@ -101,12 +101,12 @@ public class User extends TimestampedEntity {
         this.password = password;
     }
 
-    public Set<Institution> getInstitutions() {
-        return institutions;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setInstitution(Set<Institution> institutions) {
-        this.institutions = institutions;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public void setPoints(Integer points) {
@@ -118,4 +118,3 @@ public class User extends TimestampedEntity {
     }
 
 }
-

@@ -5,8 +5,8 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "institutions")
-public class Institution {
+@Table(name = "roles")
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,12 +15,12 @@ public class Institution {
     @Enumerated(EnumType.STRING)
     @NaturalId
     @Column(length = 60)
-    private String name;
+    private RoleName name;
 
-    public Institution() {
+    public Role() {
     }
 
-    public Institution(String name) {
+    public Role(RoleName name) {
         this.name = name;
     }
 
@@ -32,11 +32,11 @@ public class Institution {
         this.id = id;
     }
 
-    public String getName() {
+    public RoleName getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(RoleName name) {
         this.name = name;
     }
 

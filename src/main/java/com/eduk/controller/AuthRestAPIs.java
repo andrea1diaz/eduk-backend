@@ -3,10 +3,9 @@ package com.eduk.controller;
 import com.eduk.message.request.LoginForm;
 import com.eduk.message.request.RegisterForm;
 import com.eduk.message.response.JwtResponse;
-import com.eduk.model.Institution;
 
 import com.eduk.model.User;
-import com.eduk.repository.InstitutionRepository;
+import com.eduk.repository.RoleRepository;
 import com.eduk.repository.UserRepository;
 import com.eduk.security.jwt.JwtToken;
 import com.eduk.security.service.UserDetailsServiceImpl;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,8 +22,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.Set;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -41,7 +37,7 @@ public class AuthRestAPIs {
     UserRepository userRepository;
 
     @Autowired
-    InstitutionRepository institutionRepository;
+    RoleRepository roleRepository;
 
     @Autowired
     PasswordEncoder encoder;

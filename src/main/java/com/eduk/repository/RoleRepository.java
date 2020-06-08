@@ -1,14 +1,17 @@
 package com.eduk.repository;
 
-import com.eduk.model.Institution;
+import com.eduk.model.Role;
+import com.eduk.model.RoleName;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface InstitutionRepository extends JpaRepository<Institution, Long> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    Optional<Institution> findByName(String name);
+    Optional<Role> findByName(RoleName roleName);
 
 }
+
