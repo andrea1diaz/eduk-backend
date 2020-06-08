@@ -1,5 +1,8 @@
 # eduk-backend
 
+To run the server
+`mvn spring-boot:run`
+
 ### SpringBoot + JPA + Postgres
 
 Dependencies
