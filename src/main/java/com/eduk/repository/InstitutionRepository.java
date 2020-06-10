@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface InstitutionRepository extends JpaRepository<Institution, Long> {
-    @Query(value = "SELECT * FROM institutions WHERE id == id_  :n", nativeQuery = true)
+    @Query(value = "SELECT * FROM institutions WHERE id = id_  :n", nativeQuery = true)
     Optional<Institution> getById(@Param("n") Integer id_);
 }

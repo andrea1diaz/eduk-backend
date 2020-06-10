@@ -4,6 +4,8 @@ import com.eduk.message.request.LoginForm;
 import com.eduk.message.request.RegisterForm;
 import com.eduk.message.response.JwtResponse;
 
+import com.eduk.model.Role;
+import com.eduk.model.RoleName;
 import com.eduk.model.User;
 import com.eduk.repository.RoleRepository;
 import com.eduk.repository.UserRepository;
@@ -22,6 +24,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashSet;
+import java.util.Set;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -73,17 +77,23 @@ public class AuthRestAPIs {
 
         // Creating user account
         User user = new User(registerRequest.getFirstName(), registerRequest.getLastName(), registerRequest.getEmail(),
-                encoder.encode(registerRequest.getPassword()));
+                encoder.encode(registerRequest.getPassword()), registerRequest.getInstitutionById());
 
-        // TODO: Institution
-//        Set<String> strInstitution = registerRequest.getInstitution();
-//        Set<Institution> roles = new HashSet<Institution>();
-//
-//        Role teacherRole = roleRepository.findByName(RoleName.ROLE_TEACHER)
-//                            .orElseThrow(() -> new RuntimeException("Error: User Role not found"));
-//        roles.add(teacherRole);
-//
-//        user.setInstitution(roles);
+        Set<String> strRoles = registerRequest.getRole();
+        Set<Role> roles = new HashSet<Role>();
+
+        strRoles.forEach(role -> {
+            switch (role) {
+                case "ROLE_TEACHER":
+                    Role teacherRole = roleRepository.findByName(RoleName.ROLE_TEACHER)
+                            .orElseThrow(() -> new RuntimeException("Error: User Role not found"));
+                    roles.add(teacherRole);
+
+                    break;
+            }
+        });
+
+        user.setRoles(roles);
         userRepository.save(user);
 
         return ResponseEntity.ok().body("User registered successfully!");
