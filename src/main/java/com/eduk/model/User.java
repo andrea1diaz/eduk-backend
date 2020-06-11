@@ -51,8 +51,7 @@ public class User extends TimestampedEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @NotBlank
-    @Size(min = 1, max = 200)
+    @NotNull
     private int institution;
 
     public User() {

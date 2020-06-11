@@ -2,6 +2,7 @@ package com.eduk.message.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
@@ -26,8 +27,7 @@ public class RegisterForm {
     @Size(min = 6, max = 40)
     private String password;
 
-    @NotBlank
-    @Size(min = 6, max = 40)
+    @NotNull(message = "Please enter institution_id")
     private int institution_id;
 
     public String getFirstName() {

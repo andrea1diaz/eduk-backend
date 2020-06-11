@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Formatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -80,6 +81,7 @@ public class AuthRestAPIs {
                 encoder.encode(registerRequest.getPassword()), registerRequest.getInstitutionById());
 
         Set<String> strRoles = registerRequest.getRole();
+        System.out.println(strRoles);
         Set<Role> roles = new HashSet<Role>();
 
         strRoles.forEach(role -> {
