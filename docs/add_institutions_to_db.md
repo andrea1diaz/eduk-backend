@@ -6,7 +6,7 @@ got to the file `instituciones_table.csv` location on the terminal and put the n
 ```
 and copy the output, next enter to the database
 ```
-	psql eduk -u eduk
+	psql eduk_db -u eduk
 ```
 inside type the next command
 ```
