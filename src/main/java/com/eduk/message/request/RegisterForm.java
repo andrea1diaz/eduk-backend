@@ -26,6 +26,10 @@ public class RegisterForm {
     @Size(min = 6, max = 40)
     private String password;
 
+    @NotBlank
+    @Size(min = 6, max = 40)
+    private int institution_id;
+
     public String getFirstName() {
         return firstName;
     }
@@ -58,5 +62,12 @@ public class RegisterForm {
         this.password = password;
     }
 
+    public int getInstitutionById() { return institution_id; }
+
+    public void setInstitution_id(int institution_id) { this.institution_id = institution_id; }
+
+    public Set<String> getRole() { return this.role; }
+
+    public void setRole(Set<String> role) { this.role = role; }
 }
 
