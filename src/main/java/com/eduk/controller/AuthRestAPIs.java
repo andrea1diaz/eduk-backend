@@ -28,8 +28,8 @@ import java.util.Formatter;
 import java.util.HashSet;
 import java.util.Set;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/auth")
 public class AuthRestAPIs {
 
@@ -56,9 +56,8 @@ public class AuthRestAPIs {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
-    @PostMapping("/loginc")
+    @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
-
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
