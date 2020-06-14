@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +25,9 @@ public class Content extends TimestampedEntity {
     @Size(min = 1, max = 200)
     private String extension;
 
+    @Size(min = 5, max=2000)
+    private String description;
+
     @ManyToOne
     @JsonIgnore
     private User user;
@@ -44,7 +45,16 @@ public class Content extends TimestampedEntity {
     @Range(min = 0)
     private Double score;
 
-    @NotBlank
-    @Size(min = 1, max = 200)
+    @Min(1)
+    @Max(6)
     private int year;
+
+    public Content(String title, String description, User user, String subject, List<String> keywords){
+        this.title = title;
+        this.description = description;
+        this.user = user;
+        // this.subject = subject;
+        this.keywords = keywords;
+
+    }
 }
