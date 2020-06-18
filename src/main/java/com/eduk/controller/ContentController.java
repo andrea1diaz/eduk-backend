@@ -32,6 +32,9 @@ public class ContentController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    AuthenticationUtils authenticationUtils;
+
     @GetMapping("/{contentId}")
     @JsonView(Content.class)
     public ResponseEntity<?> getContent(@PathVariable Long contentId){
@@ -44,7 +47,7 @@ public class ContentController {
     @PostMapping("/post")
     public ResponseEntity<String> postContent(@Valid @RequestBody ContentForm postContentRequest){
         Content content = new Content(postContentRequest.getTitle(),postContentRequest.getDescription(),postContentRequest.getSubject(),postContentRequest.getKeywords(),postContentRequest.getYear());
-        User user = AuthenticationUtils.getUserObject(postContentRequest.get());
+        User user = authenticationUtils.getUserObject();
         content.setUser(user);
         contentRepository.save(content);
         
