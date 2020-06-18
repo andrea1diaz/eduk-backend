@@ -31,9 +31,12 @@ public class ContentController {
     @GetMapping("/{show}")
     @JsonView(Content.class)
     public Content getContent(@PathVariable Long show){
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         Content content = contentRepository.findById(show).get();
+        //System.out.println(content);
         return content;
     }
+
     @PostMapping("/post")
     public ResponseEntity<String> postContent(@Valid @RequestBody ContentForm postContentRequest){
         System.out.println("-----------------------------------------------");
