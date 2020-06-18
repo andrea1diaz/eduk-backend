@@ -20,21 +20,19 @@ public class ContentForm {
 
     private String email;
 
-    @Size(min = 6, max=40)
+    @Size(min = 3, max=40)
     private String Subject;
 
-    private List<String> keywords;
+    private String keywords;
 
-//    @Min(1)
-//    @Max(6)
     private String year;
-
 
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public String getEmail() { return email; }
     public String getSubject() { return Subject; }
-    public List<String> getKeywords() { return keywords;}
+    public String getKeywords() { return keywords;}
+    public String getYear() { return year;}
 
 
 }

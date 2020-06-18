@@ -49,12 +49,15 @@ public class Content extends TimestampedEntity {
     @Max(6)
     private int year;
 
-    public Content(String title, String description, User user, String subject, List<String> keywords){
+    public Content(String title, String description, User user, String subject, String keywords, int year){
         this.title = title;
         this.description = description;
         this.user = user;
+        this.year = year;
         // this.subject = subject;
-        this.keywords = keywords;
+        // this.keywords = keywords;
+        this.extension = "pdf";
+        this.score = 0.0;
 
     }
 }

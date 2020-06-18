@@ -45,7 +45,7 @@ public class ContentController {
         User author = userRepository.findByEmail(postContentRequest.getEmail()).get();
         System.out.println(author.getFirstName());
         System.out.println("***************************************************************");
-        Content content = new Content(postContentRequest.getTitle(), postContentRequest.getDescription(), author, postContentRequest.getSubject(), postContentRequest.getKeywords());
+        Content content = new Content(postContentRequest.getTitle(), postContentRequest.getDescription(), author, postContentRequest.getSubject(), postContentRequest.getKeywords(), Integer.parseInt((postContentRequest.getYear())));
         contentRepository.save(content);
         return ResponseEntity.ok().body("Content posted!");
     }
