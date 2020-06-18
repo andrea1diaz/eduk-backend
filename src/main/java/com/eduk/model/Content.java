@@ -95,11 +95,11 @@ public class Content extends TimestampedEntity {
       this.description = description;
     }
 
-    public User getuser() {
+    public User getUser() {
       return user;
     }
 
-    public void setuser(User user) {
+    public void setUser(User user) {
       this.user = user;
     }
 

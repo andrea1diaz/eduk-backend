@@ -25,14 +25,14 @@ public class ContentForm {
 
     private String keywords;
 
-    private String year;
+    private int year;
 
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public String getEmail() { return email; }
     public String getSubject() { return Subject; }
     public String getKeywords() { return keywords;}
-    public String getYear() { return year;}
+    public int getYear() { return year;}
 
 
 }
