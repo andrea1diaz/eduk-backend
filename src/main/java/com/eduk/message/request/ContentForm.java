@@ -12,14 +12,12 @@ import javax.validation.constraints.Size;
 
 public class ContentForm {
 
-    @NotBlank
     @Size(min = 3, max = 60)
     private String title;
 
     @Size(min = 5, max=2000)
     private String description;
 
-    @NotBlank
     private String email;
 
     @Size(min = 6, max=40)
@@ -27,6 +25,9 @@ public class ContentForm {
 
     private List<String> keywords;
 
+//    @Min(1)
+//    @Max(6)
+    private String year;
 
 
     public String getTitle() { return title; }
@@ -35,8 +36,5 @@ public class ContentForm {
     public String getSubject() { return Subject; }
     public List<String> getKeywords() { return keywords;}
 
-    @Min(1)
-    @Max(6)
-    private int year;
 
 }

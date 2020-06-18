@@ -36,7 +36,15 @@ public class ContentController {
     }
     @PostMapping("/post")
     public ResponseEntity<String> postContent(@Valid @RequestBody ContentForm postContentRequest){
+        System.out.println("-----------------------------------------------");
+        System.out.println("In-back");
+        System.out.println("-----------------------------------------------");
+        System.out.println(postContentRequest.getTitle());
+        System.out.println(postContentRequest.getEmail());
+        System.out.println(postContentRequest.getSubject());
         User author = userRepository.findByEmail(postContentRequest.getEmail()).get();
+        System.out.println(author.getFirstName());
+        System.out.println("***************************************************************");
         Content content = new Content(postContentRequest.getTitle(), postContentRequest.getDescription(), author, postContentRequest.getSubject(), postContentRequest.getKeywords());
         contentRepository.save(content);
         return ResponseEntity.ok().body("Content posted!");
