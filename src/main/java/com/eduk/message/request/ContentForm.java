@@ -1,12 +1,14 @@
 package com.eduk.message.request;
 
 import com.eduk.model.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+
 import javax.validation.constraints.Size;
 
 
@@ -26,6 +28,8 @@ public class ContentForm {
     private String keywords;
 
     private String year;
+
+    private MultipartFile file;
 
     public String getTitle() { return title; }
     public String getDescription() { return description; }

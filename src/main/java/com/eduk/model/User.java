@@ -27,6 +27,9 @@ public class User extends TimestampedEntity {
     @Range(min = 0)
     private Integer points;
 
+    @Range(min = 0)
+    private Integer contents;
+
     @NotBlank
     @Size(min = 1, max = 50, message = "First name length must be between 1 and 50")
     private String firstName;
@@ -63,6 +66,7 @@ public class User extends TimestampedEntity {
         this.email = email;
         this.password = password;
         this.points = 0;
+        this.contents = 0;
         this.institution = institution;
     }
 
@@ -125,5 +129,9 @@ public class User extends TimestampedEntity {
     public int getInstitution() { return institution; }
 
     public void setInstitution(int institution) { this.institution = institution; }
+
+    public Integer getContents() {
+        return this.contents;
+    }
 
 }

@@ -3,6 +3,7 @@ package com.eduk.model;
 import com.eduk.model.utils.TimestampedEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -35,6 +36,7 @@ public class Content extends TimestampedEntity {
     @ManyToOne
     @JoinColumn(name = "subject_id")
     private Subject subject;
+
 
     @ElementCollection
     @CollectionTable(name = "keywords")
