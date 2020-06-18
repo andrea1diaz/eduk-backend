@@ -30,7 +30,7 @@ public class Content extends TimestampedEntity {
 
     @ManyToOne
     @JsonIgnore
-    private User author;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "subject_id")
@@ -52,19 +52,26 @@ public class Content extends TimestampedEntity {
     public Content() {
     }
 
-    public Content(Long id,String title, String description, User author, String subject, String keywords, int year){
+    public Content(String title, String description, String subject, String keywords, int year) {
         this.title = title;
         this.description = description;
-        this.author = author;
         this.year = year;
         // this.subject = subject;
-        this.keywords = keywords;
+        // this.keywords = keywords;
         this.extension = "pdf";
-        this.score = 0.0;
-
     }
 
-    public String getId() {
+    public Content(Long id,String title, String description, User user, String subject, String keywords, int year){
+        this.title = title;
+        this.description = description;
+        this.user = user;
+        this.year = year;
+        // this.subject = subject;
+        // this.keywords = keywords;
+        this.extension = "pdf";
+    }
+
+    public Long getId() {
       return id;
     }
 
@@ -88,12 +95,12 @@ public class Content extends TimestampedEntity {
       this.description = description;
     }
 
-    public User getAuthor() {
-      return author;
+    public User getuser() {
+      return user;
     }
 
-    public void setAuthor(User author) {
-      this.author = author;
+    public void setuser(User user) {
+      this.user = user;
     }
 
     // public String getSubject() {
@@ -104,13 +111,13 @@ public class Content extends TimestampedEntity {
     //   this.subject = subject;
     // }
 
-    public String getKeywords() {
-      return keywords;
-    }
+    // public String getKeywords() {
+    //   return keywords;
+    // }
 
-    public void setKeywords(String keywords) {
-      this.keywords = keywords;
-    }
+    // public void setKeywords(String keywords) {
+    //   this.keywords = keywords;
+    // }
 
     public int getYear() {
       return year;
