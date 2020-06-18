@@ -36,11 +36,11 @@ public class ContentController {
     AuthenticationUtils authenticationUtils;
 
     @GetMapping("/{contentId}")
-    @JsonView(Content.class)
-    public ResponseEntity<?> getContent(@PathVariable Long contentId){
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        Optional<Content> content = contentRepository.findById(contentId);
-        //System.out.println(content);
+    public ResponseEntity<?> getContent(@PathVariable String contentId) {
+        Long id = Long.valueOf(contentId);
+
+        Optional<Content> content = contentRepository.findById(id);
+        
         return ResponseEntity.ok(content.orElse(null));
     }
 
@@ -54,7 +54,7 @@ public class ContentController {
         Field field = ReflectionUtils.findField(Content.class, "id");
         ReflectionUtils.makeAccessible(field);
         Long contentId = (Long) ReflectionUtils.getField(field, content);
-        return ResponseEntity.ok().body("Successful");
+        return ResponseEntity.ok().body(" ");
     }
 
 }
