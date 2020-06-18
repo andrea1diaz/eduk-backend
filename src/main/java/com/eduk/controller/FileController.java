@@ -8,10 +8,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-public class UploadFileController {
-    public ResponseEntity<String> upload(@RequestParam String name, @RequestParam("file") MultipartFile file, ModelMap modelMap) {
-        modelMap.addAttribute("file", file);
-        File new_file = new File(name, file);
+public class FileController {
+    public ResponseEntity<String> upload(@RequestParam String name, @RequestParam("file") MultipartFile file/*, ModelMap modelMap*/) {
+        //modelMap.addAttribute("file", file);
+        // File new_file = new File(name, "s");
         return ResponseEntity.ok().body("File created successfully!");
     }
 }
