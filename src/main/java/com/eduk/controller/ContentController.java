@@ -28,13 +28,13 @@ public class ContentController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("/{show}")
+    @GetMapping("/{contentId}")
     @JsonView(Content.class)
-    public Content getContent(@PathVariable Long show){
+    public ResponseEntity<?> getContent(@PathVariable Long contentId){
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        Content content = contentRepository.findById(show).get();
+        Optional<Content> content = contentRepository.findById(contentId);
         //System.out.println(content);
-        return content;
+        return ResponseEntity.ok(content.orElse(null));
     }
 
     @PostMapping("/post")

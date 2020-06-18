@@ -30,7 +30,7 @@ public class Content extends TimestampedEntity {
 
     @ManyToOne
     @JsonIgnore
-    private User user;
+    private User author;
 
     @ManyToOne
     @JoinColumn(name = "subject_id")
@@ -49,15 +49,74 @@ public class Content extends TimestampedEntity {
     @Max(6)
     private int year;
 
-    public Content(String title, String description, User user, String subject, String keywords, int year){
+    public Content() {
+    }
+
+    public Content(Long id,String title, String description, User author, String subject, String keywords, int year){
         this.title = title;
         this.description = description;
-        this.user = user;
+        this.author = author;
         this.year = year;
         // this.subject = subject;
-        // this.keywords = keywords;
+        this.keywords = keywords;
         this.extension = "pdf";
         this.score = 0.0;
 
+    }
+
+    public String getId() {
+      return id;
+    }
+
+    public void setId(long id) {
+      this.id = id;
+    }
+
+    public String getTitle() {
+      return title;
+    }
+
+    public void setTitle(String title) {
+      this.title = title;
+    }
+
+    public String getDescription(description) {
+      return description;
+    }
+
+    public void setDescription(String description) {
+      this.description = description;
+    }
+
+    public User getAuthor() {
+      return author;
+    }
+
+    public void setAuthor(User author) {
+      this.author = author;
+    }
+
+    // public String getSubject() {
+    //   return subject;
+    // }
+
+    // public void setSubject(String subject) {
+    //   this.subject = subject;
+    // }
+
+    public String getKeywords() {
+      return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+      this.keywords = keywords;
+    }
+
+    public int getYear() {
+      return year;
+    }
+
+    public void setYear(int year) {
+      this.year = year;
     }
 }
