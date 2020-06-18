@@ -40,8 +40,7 @@ public class Content extends TimestampedEntity {
     @CollectionTable(name = "keywords")
     private List<String> keywords = new ArrayList<String>();
 
-    @Column(name = "score", nullable = false)
-    @NotNull(message = "Score cannot be empty")
+    @Column(name = "score")
     @Range(min = 0)
     private Double score;
 
@@ -49,12 +48,83 @@ public class Content extends TimestampedEntity {
     @Max(6)
     private int year;
 
-    public Content(String title, String description, User user, String subject, List<String> keywords){
+    public Content() {
+    }
+
+    public Content(String title, String description, String subject, String keywords, int year) {
+        this.title = title;
+        this.description = description;
+        this.year = year;
+        // this.subject = subject;
+        // this.keywords = keywords;
+        this.score=0
+        this.extension = "pdf";
+    }
+
+    public Content(Long id,String title, String description, User user, String subject, String keywords, int year){
         this.title = title;
         this.description = description;
         this.user = user;
+        this.year = year;
         // this.subject = subject;
-        this.keywords = keywords;
+        // this.keywords = keywords;
+        this.score=0
+        this.extension = "pdf";
+    }
 
+    public Long getId() {
+      return id;
+    }
+
+    public void setId(long id) {
+      this.id = id;
+    }
+
+    public String getTitle() {
+      return title;
+    }
+
+    public void setTitle(String title) {
+      this.title = title;
+    }
+
+    public String getDescription(String description) {
+      return description;
+    }
+
+    public void setDescription(String description) {
+      this.description = description;
+    }
+
+    public User getUser() {
+      return user;
+    }
+
+    public void setUser(User user) {
+      this.user = user;
+    }
+
+    // public String getSubject() {
+    //   return subject;
+    // }
+
+    // public void setSubject(String subject) {
+    //   this.subject = subject;
+    // }
+
+    // public String getKeywords() {
+    //   return keywords;
+    // }
+
+    // public void setKeywords(String keywords) {
+    //   this.keywords = keywords;
+    // }
+
+    public int getYear() {
+      return year;
+    }
+
+    public void setYear(int year) {
+      this.year = year;
     }
 }

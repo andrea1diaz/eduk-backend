@@ -5,14 +5,18 @@ import com.eduk.message.request.ContentForm;
 import com.eduk.model.User;
 import com.eduk.repository.ContentRepository;
 import com.eduk.repository.UserRepository;
+import com.eduk.security.utils.AuthenticationUtils;
+import com.eduk.message.response.SuccessfulCreation;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.sun.mail.iap.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.util.ReflectionUtils;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -28,18 +32,29 @@ public class ContentController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("/{show}")
+    @Autowired
+    AuthenticationUtils authenticationUtils;
+
+    @GetMapping("/{contentId}")
     @JsonView(Content.class)
-    public Content getContent(@PathVariable Long show){
-        Content content = contentRepository.findById(show).get();
-        return content;
+    public ResponseEntity<?> getContent(@PathVariable Long contentId){
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        Optional<Content> content = contentRepository.findById(contentId);
+        //System.out.println(content);
+        return ResponseEntity.ok(content.orElse(null));
     }
+
     @PostMapping("/post")
     public ResponseEntity<String> postContent(@Valid @RequestBody ContentForm postContentRequest){
-        User author = userRepository.findByEmail(postContentRequest.getEmail()).get();
-        Content content = new Content(postContentRequest.getTitle(), postContentRequest.getDescription(), author, postContentRequest.getSubject(), postContentRequest.getKeywords());
+        Content content = new Content(postContentRequest.getTitle(),postContentRequest.getDescription(),postContentRequest.getSubject(),postContentRequest.getKeywords(),postContentRequest.getYear());
+        User user = authenticationUtils.getUserObject();
+        content.setUser(user);
         contentRepository.save(content);
-        return ResponseEntity.ok().body("Content posted!");
+        
+        Field field = ReflectionUtils.findField(Content.class, "id");
+        ReflectionUtils.makeAccessible(field);
+        Long contentId = (Long) ReflectionUtils.getField(field, content);
+        return ResponseEntity.ok().body("Successful");
     }
 
 }
