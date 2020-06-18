@@ -40,8 +40,7 @@ public class Content extends TimestampedEntity {
     @CollectionTable(name = "keywords")
     private List<String> keywords = new ArrayList<String>();
 
-    @Column(name = "score", nullable = false)
-    @NotNull(message = "Score cannot be empty")
+    @Column(name = "score")
     @Range(min = 0)
     private Double score;
 

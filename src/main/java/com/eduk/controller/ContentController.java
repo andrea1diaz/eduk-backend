@@ -54,7 +54,7 @@ public class ContentController {
         Field field = ReflectionUtils.findField(Content.class, "id");
         ReflectionUtils.makeAccessible(field);
         Long contentId = (Long) ReflectionUtils.getField(field, content);
-        return ResponseEntity.ok().body(new SuccessfulCreation(content, "Content"));
+        return ResponseEntity.ok().body("Successful");
     }
 
 }
