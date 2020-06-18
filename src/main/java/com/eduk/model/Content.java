@@ -80,7 +80,7 @@ public class Content extends TimestampedEntity {
       this.title = title;
     }
 
-    public String getDescription(description) {
+    public String getDescription(String description) {
       return description;
     }
 
