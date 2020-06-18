@@ -57,7 +57,7 @@ public class Content extends TimestampedEntity {
         this.year = year;
         // this.subject = subject;
         // this.keywords = keywords;
-        this.score=0
+        this.score = 0.0;
         this.extension = "pdf";
     }
 
@@ -68,7 +68,7 @@ public class Content extends TimestampedEntity {
         this.year = year;
         // this.subject = subject;
         // this.keywords = keywords;
-        this.score=0
+        this.score = 0.0;
         this.extension = "pdf";
     }
 
