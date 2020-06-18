@@ -40,8 +40,7 @@ public class Content extends TimestampedEntity {
     @CollectionTable(name = "keywords")
     private List<String> keywords = new ArrayList<String>();
 
-    @Column(name = "score", nullable = false)
-    @NotNull(message = "Score cannot be empty")
+    @Column(name = "score")
     @Range(min = 0)
     private Double score;
 
@@ -58,6 +57,7 @@ public class Content extends TimestampedEntity {
         this.year = year;
         // this.subject = subject;
         // this.keywords = keywords;
+        this.score=0
         this.extension = "pdf";
     }
 
@@ -68,6 +68,7 @@ public class Content extends TimestampedEntity {
         this.year = year;
         // this.subject = subject;
         // this.keywords = keywords;
+        this.score=0
         this.extension = "pdf";
     }
 
