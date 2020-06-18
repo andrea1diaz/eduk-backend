@@ -134,4 +134,6 @@ public class User extends TimestampedEntity {
         return this.contents;
     }
 
+    public void addContent() { contents += 1; }
+
 }

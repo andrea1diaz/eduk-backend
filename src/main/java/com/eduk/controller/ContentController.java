@@ -43,10 +43,14 @@ public class ContentController {
         System.out.println(postContentRequest.getEmail());
         System.out.println(postContentRequest.getSubject());
         User author = userRepository.findByEmail(postContentRequest.getEmail()).get();
-        System.out.println(author.getFirstName());
+        // author.addContent();
+        System.out.println("Contents");
+        /*System.out.println(author.getContents());
+        System.out.println("Name");
+        System.out.println(author.getFirstName());*/
         System.out.println("***************************************************************");
         Content content = new Content(postContentRequest.getTitle(), postContentRequest.getDescription(), author, postContentRequest.getSubject(), postContentRequest.getKeywords(), Integer.parseInt((postContentRequest.getYear())));
-        contentRepository.save(content);
+        // contentRepository.save(content);
         return ResponseEntity.ok().body("Content posted!");
     }
 
