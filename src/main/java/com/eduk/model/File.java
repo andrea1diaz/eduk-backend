@@ -7,6 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.IOException;
+import java.io.InputStream;
 
 @Entity
 @Table(name = "files", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
@@ -21,10 +23,12 @@ public class File {
     private String name;
 
     @NotBlank
-    private String bin;
+    private byte[] bin;
 
-    public File(String name, String binary){
+    public File(String name, byte[] binary) {
         this.name = name;
         this.bin = binary;
+        System.out.println("INCONSTRUCTORINCONSTRUCTORINCONSTRUCTORINCONSTRUCTORINCONSTRUCTORINCONSTRUCTOR");
+        System.out.println(this.bin);
     }
 }

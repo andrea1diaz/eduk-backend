@@ -1,17 +1,31 @@
 package com.eduk.controller;
-
+import com.eduk.message.request.FileForm;
 import com.eduk.model.File;
+import com.eduk.repository.ContentRepository;
+import com.eduk.repository.FileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import java.io.IOException;
 
-@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RestController
+@RequestMapping("/api/file")
 public class FileController {
-    public ResponseEntity<String> upload(@RequestParam String name, @RequestParam("file") MultipartFile file/*, ModelMap modelMap*/) {
-        //modelMap.addAttribute("file", file);
-        // File new_file = new File(name, "s");
+    @Autowired
+    FileRepository fileRepository;
+
+    @PostMapping(value = "/uploadFile")
+    public ResponseEntity<String> upload(@Valid @RequestBody FileForm postFileRequest) throws IOException {
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        System.out.println(postFileRequest.getName());
+        System.out.println(postFileRequest.getFile());
+        //File new_file = new File(postFileRequest.getName(), postFileRequest.getFile().getBytes());
+        //fileRepository.save(new_file);
         return ResponseEntity.ok().body("File created successfully!");
     }
 }
