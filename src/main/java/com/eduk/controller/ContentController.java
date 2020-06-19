@@ -47,14 +47,17 @@ public class ContentController {
     @PostMapping("/post")
     public ResponseEntity<String> postContent(@Valid @RequestBody ContentForm postContentRequest){
         Content content = new Content(postContentRequest.getTitle(),postContentRequest.getDescription(),postContentRequest.getSubject(),postContentRequest.getKeywords(),postContentRequest.getYear(), postContentRequest.getFile());
-        User user = authenticationUtils.getUserObject();
+        User user = userRepository.findByEmail(postContentRequest.getEmail()).get();
+        //User user = authenticationUtils.getUserObject();
         content.setUser(user);
         contentRepository.save(content);
         
-        Field field = ReflectionUtils.findField(Content.class, "id");
+       /* Field field = ReflectionUtils.findField(Content.class, "id");
         ReflectionUtils.makeAccessible(field);
-        Long contentId = (Long) ReflectionUtils.getField(field, content);
+        Long contentId = (Long) ReflectionUtils.getField(field, content);*/
         return ResponseEntity.ok().body(" ");
+
+
     }
 
 }
