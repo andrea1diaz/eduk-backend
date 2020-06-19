@@ -36,11 +36,10 @@ public class ContentController {
     AuthenticationUtils authenticationUtils;
 
     @GetMapping("/{contentId}")
-    public ResponseEntity<?> getContent(@PathVariable String contentId) {
-        Long id = Long.valueOf(contentId);
+    public ResponseEntity<?> getContent(@PathVariable String id) {
 
         Optional<Content> content = contentRepository.findById(id);
-        
+
         return ResponseEntity.ok(content.orElse(null));
     }
 

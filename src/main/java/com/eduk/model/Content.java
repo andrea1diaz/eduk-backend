@@ -14,14 +14,11 @@ import java.util.List;
 public class Content extends TimestampedEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @NotBlank
     @Size(min = 1, max = 200)
     private String title;
-
-    private String file;
 
     @NotBlank
     @Size(min = 1, max = 200)
@@ -61,40 +58,40 @@ public class Content extends TimestampedEntity {
         // this.keywords = keywords;
         this.score = 0.0;
         this.extension = "pdf";
-        this.file = file;
+        this.id = file;
     }
 
 
-    public Long getId() {
-      return id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(long id) {
-      this.id = id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
-      return title;
+        return title;
     }
 
     public void setTitle(String title) {
-      this.title = title;
+        this.title = title;
     }
 
     public String getDescription(String description) {
-      return description;
+        return description;
     }
 
     public void setDescription(String description) {
-      this.description = description;
+        this.description = description;
     }
 
     public User getUser() {
-      return user;
+        return user;
     }
 
     public void setUser(User user) {
-      this.user = user;
+        this.user = user;
     }
 
     // public String getSubject() {
@@ -114,10 +111,10 @@ public class Content extends TimestampedEntity {
     // }
 
     public int getYear() {
-      return year;
+        return year;
     }
 
     public void setYear(int year) {
-      this.year = year;
+        this.year = year;
     }
 }
