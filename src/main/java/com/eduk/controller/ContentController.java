@@ -46,7 +46,7 @@ public class ContentController {
 
     @PostMapping("/post")
     public ResponseEntity<String> postContent(@Valid @RequestBody ContentForm postContentRequest){
-        Content content = new Content(postContentRequest.getTitle(),postContentRequest.getDescription(),postContentRequest.getSubject(),postContentRequest.getKeywords(),postContentRequest.getYear());
+        Content content = new Content(postContentRequest.getTitle(),postContentRequest.getDescription(),postContentRequest.getSubject(),postContentRequest.getKeywords(),postContentRequest.getYear(), postContentRequest.getFile());
         User user = authenticationUtils.getUserObject();
         content.setUser(user);
         contentRepository.save(content);
