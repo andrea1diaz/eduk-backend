@@ -14,15 +14,15 @@ import java.io.IOException;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/file")
+@RequestMapping(path = "/api/file", consumes = {"multipart/form-data"})
 public class FileController {
     @Autowired
     FileRepository fileRepository;
 
     @PostMapping(value = "/uploadFile")
-    public ResponseEntity<String> upload(@Valid @RequestBody FileForm postFileRequest) throws IOException {
+    public ResponseEntity<String> upload(@ModelAttribute FileForm postFileRequest) throws IOException {
         System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        System.out.println(postFileRequest.getName());
+        System.out.println(postFileRequest);
         System.out.println(postFileRequest.getFile());
         //File new_file = new File(postFileRequest.getName(), postFileRequest.getFile().getBytes());
         //fileRepository.save(new_file);
