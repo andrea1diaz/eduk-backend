@@ -27,11 +27,14 @@ public class ContentForm {
 
     private int year;
 
+    private String file;
+
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public String getEmail() { return email; }
     public String getSubject() { return Subject; }
     public String getKeywords() { return keywords;}
+    public String getFile() {return file;}
     public int getYear() { return year;}
 
 

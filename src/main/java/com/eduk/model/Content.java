@@ -21,6 +21,8 @@ public class Content extends TimestampedEntity {
     @Size(min = 1, max = 200)
     private String title;
 
+    private String file;
+
     @NotBlank
     @Size(min = 1, max = 200)
     private String extension;
@@ -51,7 +53,7 @@ public class Content extends TimestampedEntity {
     public Content() {
     }
 
-    public Content(String title, String description, String subject, String keywords, int year) {
+    public Content(String title, String description, String subject, String keywords, int year, String file) {
         this.title = title;
         this.description = description;
         this.year = year;
@@ -59,18 +61,9 @@ public class Content extends TimestampedEntity {
         // this.keywords = keywords;
         this.score = 0.0;
         this.extension = "pdf";
+        this.file = file;
     }
 
-    public Content(Long id,String title, String description, User user, String subject, String keywords, int year){
-        this.title = title;
-        this.description = description;
-        this.user = user;
-        this.year = year;
-        // this.subject = subject;
-        // this.keywords = keywords;
-        this.score = 0.0;
-        this.extension = "pdf";
-    }
 
     public Long getId() {
       return id;
