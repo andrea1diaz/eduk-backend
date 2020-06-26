@@ -36,7 +36,6 @@ public class CommentController {
         Long id = Long.valueOf(contentId);
 
         Optional<Content> content = contentRepository.findById(id);
-        System.out.println(content.get().getTitle());
         List<Comment> comments = commentRepository.findAllByContent(content.get());
         List<CommentsResponse> response = new ArrayList<CommentsResponse>();
         for (int i = 0; i < comments.size(); i++) {

@@ -80,7 +80,6 @@ public class AuthRestAPIs {
                 encoder.encode(registerRequest.getPassword()), registerRequest.getInstitutionById());
 
         Set<String> strRoles = registerRequest.getRole();
-        System.out.println(strRoles);
         Set<Role> roles = new HashSet<Role>();
 
         strRoles.forEach(role -> {
