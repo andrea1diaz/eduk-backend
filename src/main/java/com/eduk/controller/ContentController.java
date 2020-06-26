@@ -38,9 +38,7 @@ public class ContentController {
     @GetMapping("/{contentId}")
     public ResponseEntity<?> getContent(@PathVariable String contentId) {
         Long id = Long.valueOf(contentId);
-
         Optional<Content> content = contentRepository.findById(id);
-        
         return ResponseEntity.ok(content.orElse(null));
     }
 

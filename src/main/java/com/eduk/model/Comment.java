@@ -32,6 +32,7 @@ public class Comment extends TimestampedEntity {
     public Comment(String comentario){
         this.comentario = comentario;
     }
+    public Comment(){}
 
     public String getComentario() {
         return comentario;

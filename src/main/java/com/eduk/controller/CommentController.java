@@ -1,6 +1,7 @@
 package com.eduk.controller;
 
 import com.eduk.message.request.CommentForm;
+import com.eduk.message.response.CommentsResponse;
 import com.eduk.model.Content;
 import com.eduk.model.User;
 import com.eduk.model.Comment;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -28,6 +31,23 @@ public class CommentController {
     @Autowired
     ContentRepository contentRepository;
 
+    @GetMapping("/{contentId}")
+    public ResponseEntity<?> getContent(@PathVariable String contentId) {
+        Long id = Long.valueOf(contentId);
+
+        Optional<Content> content = contentRepository.findById(id);
+        System.out.println(content.get().getTitle());
+        List<Comment> comments = commentRepository.findAllByContent(content.get());
+        List<CommentsResponse> response = new ArrayList<CommentsResponse>();
+        for (int i = 0; i < comments.size(); i++) {
+            String comentario = comments.get(i).getComentario();
+            String usuario = comments.get(i).getUser().getFirstName() + " " + comments.get(i).getUser().getLastName();
+            CommentsResponse item = new CommentsResponse(comentario, usuario);
+            response.add(item);
+        }
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/post")
     public ResponseEntity<String> postComment(@Valid @RequestBody CommentForm postCommentRequest){
         Comment comment = new Comment(postCommentRequest.getCommentContent());
@@ -37,7 +57,5 @@ public class CommentController {
         comment.setContent(content.get());
         commentRepository.save(comment);
         return ResponseEntity.ok().body("");
-
-
     }
 }
