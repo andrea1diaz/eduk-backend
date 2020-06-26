@@ -30,15 +30,12 @@ public class CommentController {
 
     @PostMapping("/post")
     public ResponseEntity<String> postComment(@Valid @RequestBody CommentForm postCommentRequest){
-        Comment comment = new Comment(postCommentRequest.getComentario());
+        Comment comment = new Comment(postCommentRequest.getCommentContent());
         User user = userRepository.findByEmail(postCommentRequest.getEmail()).get();
-        Optional<Content> content = contentRepository.findById(Long.valueOf((postCommentRequest.getContent_id())));
+        Optional<Content> content = contentRepository.findById((postCommentRequest.getContent()));
         comment.setUser(user);
         comment.setContent(content.get());
-        System.out.println(comment.getComentario());
-        System.out.println(comment.getUser().getFirstName());
-        System.out.println(comment.getContent().getTitle());
-//        commentRepository.saveAll(comment);
+        commentRepository.save(comment);
         return ResponseEntity.ok().body("");
 
 
