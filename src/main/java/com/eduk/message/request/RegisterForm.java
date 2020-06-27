@@ -27,8 +27,8 @@ public class RegisterForm {
     @Size(min = 6, max = 40)
     private String password;
 
-    @NotNull(message = "Please enter institution_id")
-    private int institution_id;
+    @NotBlank
+    private String institution;
 
     public String getFirstName() {
         return firstName;
@@ -62,9 +62,9 @@ public class RegisterForm {
         this.password = password;
     }
 
-    public int getInstitutionById() { return institution_id; }
+    public String getInstitution() { return this.institution; }
 
-    public void setInstitution_id(int institution_id) { this.institution_id = institution_id; }
+    public void setInstitution(String institution) { this.institution = institution; }
 
     public Set<String> getRole() { return this.role; }
 

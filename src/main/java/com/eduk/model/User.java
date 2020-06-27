@@ -51,19 +51,15 @@ public class User extends TimestampedEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @NotNull
-    private int institution;
-
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String password, int institution) {
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.points = 0;
-        this.institution = institution;
     }
 
     public Long getId() {
@@ -121,9 +117,5 @@ public class User extends TimestampedEntity {
     public Integer getPoints() {
         return this.points;
     }
-
-    public int getInstitution() { return institution; }
-
-    public void setInstitution(int institution) { this.institution = institution; }
 
 }
