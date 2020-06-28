@@ -51,6 +51,8 @@ public class User extends TimestampedEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    private String photo_url;
+
     public User() {
     }
 
@@ -118,4 +120,7 @@ public class User extends TimestampedEntity {
         return this.points;
     }
 
+    public String getPhoto_url() { return photo_url; }
+
+    public void setPhoto_url(String photo_url) { this.photo_url = photo_url; }
 }

@@ -19,6 +19,8 @@ public class UpdateUserForm {
     @Size(min = 6, max = 100, message = "Password length must be between 6 and 100")
     private String password;
 
+    private String photo_url;
+
     private int points;
 
     public Optional<Integer> getPoints() {
@@ -60,5 +62,9 @@ public class UpdateUserForm {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Optional<String> getPhoto_url() { return Optional.ofNullable(photo_url); }
+
+    public void setPhoto_url(String photo_url) { this.photo_url = photo_url; }
 
 }
