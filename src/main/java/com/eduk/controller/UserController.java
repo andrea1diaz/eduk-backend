@@ -32,6 +32,11 @@ public class UserController {
     public ResponseEntity<?> userInfo() {
 
         User user = authenticationUtils.getUserObject();
+        System.out.println("------------------------------");
+
+        System.out.println(user.getPhoto_url());
+
+        System.out.println("------------------------------");
 
         return ResponseEntity.ok(user);
     }
@@ -43,6 +48,7 @@ public class UserController {
         Optional<String> firstName = fields.getFirstName();
         Optional<String> lastName = fields.getLastName();
         Optional<String> email = fields.getEmail();
+        Optional<String> photo = fields.getPhoto_url();
 
         Optional<String> password = fields.getPassword();
         Optional<Integer> points = fields.getPoints();
@@ -55,6 +61,9 @@ public class UserController {
         }
         if (email.isPresent()) {
             user.setEmail(email.get());
+        }
+        if (photo.isPresent()) {
+            user.setPhoto_url(photo.get());
         }
         if (password.isPresent()) {
             user.setPassword(encoder.encode(password.get()));
