@@ -46,6 +46,11 @@ public class User extends TimestampedEntity {
     @Size(min = 6, max = 100, message = "Password length must be between 6 and 100")
     private String password;
 
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "institution_id")
+    private Institution institution;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -120,7 +125,16 @@ public class User extends TimestampedEntity {
         return this.points;
     }
 
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
+
     public String getPhoto_url() { return photo_url; }
 
     public void setPhoto_url(String photo_url) { this.photo_url = photo_url; }
+
 }
