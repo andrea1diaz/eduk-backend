@@ -14,7 +14,7 @@ public class ContentForm {
     private String email;
 
     @Size(min = 3, max=40)
-    private String Subject;
+    private String subject;
 
     private String keywords;
 
@@ -25,7 +25,7 @@ public class ContentForm {
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public String getEmail() { return email; }
-    public String getSubject() { return Subject; }
+    public String getSubject() { return subject; }
     public String getKeywords() { return keywords;}
     public String getFile() {return file;}
     public int getYear() { return year;}

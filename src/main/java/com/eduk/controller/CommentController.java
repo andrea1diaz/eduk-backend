@@ -54,6 +54,8 @@ public class CommentController {
         Optional<Content> content = contentRepository.findById((postCommentRequest.getContent()));
         comment.setUser(user);
         comment.setContent(content.get());
+        content.get().increaseScore(1);
+        contentRepository.save(content.get());
         commentRepository.save(comment);
         return ResponseEntity.ok().body("");
     }

@@ -1,9 +1,12 @@
 package com.eduk.controller;
 
+import com.eduk.message.response.ContentResponse;
 import com.eduk.model.Content;
 import com.eduk.message.request.ContentForm;
+import com.eduk.model.Subject;
 import com.eduk.model.User;
 import com.eduk.repository.ContentRepository;
+import com.eduk.repository.SubjectRepository;
 import com.eduk.repository.UserRepository;
 import com.eduk.security.utils.AuthenticationUtils;
 import com.eduk.message.response.SuccessfulCreation;
@@ -33,18 +36,24 @@ public class ContentController {
     UserRepository userRepository;
 
     @Autowired
+    SubjectRepository subjectRepository;
+
+    @Autowired
     AuthenticationUtils authenticationUtils;
 
     @GetMapping("/{contentId}")
     public ResponseEntity<?> getContent(@PathVariable String contentId) {
         Long id = Long.valueOf(contentId);
-        Optional<Content> content = contentRepository.findById(id);
-        return ResponseEntity.ok(content.orElse(null));
+        Content content = contentRepository.findById(id).get();
+        User user = content.getUser();
+        ContentResponse response = new ContentResponse(content, user.getFirstName() + " " + user.getLastName());
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/post")
     public ResponseEntity<String> postContent(@Valid @RequestBody ContentForm postContentRequest){
-        Content content = new Content(postContentRequest.getTitle(),postContentRequest.getDescription(),postContentRequest.getSubject(),postContentRequest.getKeywords(),postContentRequest.getYear(), postContentRequest.getFile());
+        Optional<Subject> subject = subjectRepository.findByName(postContentRequest.getSubject());
+        Content content = new Content(postContentRequest.getTitle(),postContentRequest.getDescription(),subject.get(),postContentRequest.getKeywords(),postContentRequest.getYear(), postContentRequest.getFile());
         User user = userRepository.findByEmail(postContentRequest.getEmail()).get();
         //User user = authenticationUtils.getUserObject();
         content.setUser(user);
