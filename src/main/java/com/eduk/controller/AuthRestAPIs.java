@@ -87,6 +87,10 @@ public class AuthRestAPIs {
         User user = new User(registerRequest.getFirstName(), registerRequest.getLastName(), registerRequest.getEmail(),
                 encoder.encode(registerRequest.getPassword()));
 
+
+        Institution institution = institutionRepository.findById(Long.parseLong(registerRequest.getInstitution())).get();
+        user.setInstitution(institution);
+
         Set<String> strRoles = registerRequest.getRole();
         Set<Role> roles = new HashSet<Role>();
 
@@ -97,15 +101,11 @@ public class AuthRestAPIs {
                             .orElseThrow(() -> new RuntimeException("Error: User Role not found"));
                     roles.add(teacherRole);
 
-                    user.setRoles(roles);
-                    userRepository.save(user);
-
-                    Teacher teacher = new Teacher();
+                    /*Teacher teacher = new Teacher();
                     User t_user = userRepository.findByEmail(registerRequest.getEmail()).get();
-                    Institution t_institution = institutionRepository.findById(Long.parseLong(registerRequest.getInstitution())).get();
                     teacher.setUser(t_user);
                     teacher.setInstitution(t_institution);
-                    teacherRepository.save(teacher);
+                    teacherRepository.save(teacher);*/
 
                     break;
                 case "ROLE_STUDENT":
@@ -113,17 +113,15 @@ public class AuthRestAPIs {
                             .orElseThrow(() -> new RuntimeException("Error: User Role not found"));
                     roles.add(studentRole);
 
-                    user.setRoles(roles);
-                    userRepository.save(user);
-
                     break;
             }
         });
+
+        user.setRoles(roles);
+        userRepository.save(user);
 
         return ResponseEntity.ok().body("User registered successfully!");
     }
 
 }
-
-
 
