@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name = "subjects")
 @JsonIgnoreProperties(allowGetters = true)
-public class Subject extends TimestampedEntity {
+public class Subject{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +25,9 @@ public class Subject extends TimestampedEntity {
     private Set<Content> contents;
 
     public Subject() {
+    }
+
+    public String getName() {
+        return name;
     }
 }

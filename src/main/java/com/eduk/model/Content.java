@@ -53,11 +53,11 @@ public class Content extends TimestampedEntity {
     public Content() {
     }
 
-    public Content(String title, String description, String subject, String keywords, int year, String file) {
+    public Content(String title, String description, Subject subject, String keywords, int year, String file) {
         this.title = title;
         this.description = description;
         this.year = year;
-        // this.subject = subject;
+        this.subject = subject;
         // this.keywords = keywords;
         this.score = 0.0;
         this.extension = "pdf";
@@ -81,7 +81,7 @@ public class Content extends TimestampedEntity {
       this.title = title;
     }
 
-    public String getDescription(String description) {
+    public String getDescription() {
       return description;
     }
 
@@ -97,13 +97,20 @@ public class Content extends TimestampedEntity {
       this.user = user;
     }
 
-    // public String getSubject() {
-    //   return subject;
-    // }
+    public void increaseScore(int points){
+        this.score += points;
+    }
+    public Double getScore(){
+        return this.score;
+    }
 
-    // public void setSubject(String subject) {
-    //   this.subject = subject;
-    // }
+     public Subject getSubject() {
+       return this.subject;
+     }
+
+     public void setSubject(Subject subject) {
+       this.subject = subject;
+     }
 
     // public String getKeywords() {
     //   return keywords;
