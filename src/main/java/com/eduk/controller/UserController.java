@@ -32,12 +32,6 @@ public class UserController {
     public ResponseEntity<?> userInfo() {
 
         User user = authenticationUtils.getUserObject();
-        System.out.println("------------------------------");
-
-        System.out.println(user.getPhoto_url());
-
-        System.out.println("------------------------------");
-
         return ResponseEntity.ok(user);
     }
 
