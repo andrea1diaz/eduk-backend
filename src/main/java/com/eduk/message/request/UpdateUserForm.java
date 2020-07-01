@@ -1,5 +1,7 @@
 package com.eduk.message.request;
 
+import com.eduk.model.Institution;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.util.Optional;
@@ -18,6 +20,8 @@ public class UpdateUserForm {
 
     @Size(min = 6, max = 100, message = "Password length must be between 6 and 100")
     private String password;
+
+    private String institution;
 
     private String photo_url;
 
@@ -62,6 +66,12 @@ public class UpdateUserForm {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Optional<String> getInstitution() {
+        return Optional.ofNullable(this.institution);
+    }
+
+    public void setInstitution(String institution) {  this.institution = institution; };
 
     public Optional<String> getPhoto_url() { return Optional.ofNullable(photo_url); }
 

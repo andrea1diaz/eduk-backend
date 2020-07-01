@@ -2,6 +2,7 @@ package com.eduk.controller;
 
 import com.eduk.message.request.UpdateUserForm;
 import com.eduk.model.User;
+import com.eduk.repository.InstitutionRepository;
 import com.eduk.repository.UserRepository;
 
 import com.eduk.security.utils.AuthenticationUtils;
@@ -26,6 +27,8 @@ public class UserController {
     UserRepository userRepository;
 
     @Autowired
+    InstitutionRepository institutionRepository;
+    @Autowired
     PasswordEncoder encoder;
 
     @GetMapping("")
@@ -43,7 +46,7 @@ public class UserController {
         Optional<String> lastName = fields.getLastName();
         Optional<String> email = fields.getEmail();
         Optional<String> photo = fields.getPhoto_url();
-
+        Optional<String> institution = fields.getInstitution();
         Optional<String> password = fields.getPassword();
         Optional<Integer> points = fields.getPoints();
 
@@ -59,13 +62,15 @@ public class UserController {
         if (photo.isPresent()) {
             user.setPhoto_url(photo.get());
         }
+        if (institution.isPresent()) {
+            user.setInstitution(institutionRepository.findById(Long.parseLong(institution.get())).get());
+        }
         if (password.isPresent()) {
             user.setPassword(encoder.encode(password.get()));
         }
         if (points.isPresent()) {
             user.setPoints(points.get());
         }
-
         userRepository.save(user);
 
         return ResponseEntity.ok().body("Successfully updated the user.");
