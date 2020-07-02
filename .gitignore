@@ -50,5 +50,6 @@ nbdist/
 ssh-ec2
 
 .vim
+.DS_Store
 
 tex/files/*

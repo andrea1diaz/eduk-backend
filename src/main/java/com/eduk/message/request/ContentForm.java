@@ -1,6 +1,8 @@
 package com.eduk.message.request;
 
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ContentForm {
@@ -16,7 +18,7 @@ public class ContentForm {
     @Size(min = 3, max=40)
     private String subject;
 
-    private String keywords;
+    private List<String> keywords = new ArrayList<String> ();
 
     private int year;
 
@@ -26,9 +28,9 @@ public class ContentForm {
     public String getDescription() { return description; }
     public String getEmail() { return email; }
     public String getSubject() { return subject; }
-    public String getKeywords() { return keywords;}
-    public String getFile() {return file;}
-    public int getYear() { return year;}
+    public List<String> getKeywords() { return keywords; }
+    public String getFile() { return file; }
+    public int getYear() { return year; }
 
 
 }

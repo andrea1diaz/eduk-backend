@@ -10,10 +10,13 @@ import com.eduk.repository.SubjectRepository;
 import com.eduk.repository.UserRepository;
 import com.eduk.security.utils.AuthenticationUtils;
 import com.eduk.message.response.SuccessfulCreation;
+import com.eduk.message.response.RequestMessages;
+
 import com.fasterxml.jackson.annotation.JsonView;
 import com.sun.mail.iap.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.util.ReflectionUtils;
 
@@ -41,6 +44,23 @@ public class ContentController {
     @Autowired
     AuthenticationUtils authenticationUtils;
 
+		@GetMapping("")
+		public ResponseEntity<?> getContentByKeywords (@RequestParam(required = false) Optional<List<String>> keywords) {
+			Optional<List<Content>> contents;
+
+			if (keywords.isPresent()) {
+				if (keywords.get().isEmpty()) {
+					return ResponseEntity.badRequest().body(RequestMessages.QUESTION_KEYWORD_EMPTY);
+				}
+				contents = contentRepository.getContentByKeywords(keywords.get());
+			}
+			else {
+				contents = contentRepository.getContentsAll();
+			}
+
+			return ResponseEntity.ok().body(contents.orElse(List.of()));
+		}
+
     @GetMapping("/{contentId}")
     public ResponseEntity<?> getContent(@PathVariable String contentId) {
         Long id = Long.valueOf(contentId);
@@ -51,6 +71,7 @@ public class ContentController {
     }
 
     @PostMapping("/post")
+		@PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<String> postContent(@Valid @RequestBody ContentForm postContentRequest){
         Optional<Subject> subject = subjectRepository.findByName(postContentRequest.getSubject());
         Content content = new Content(postContentRequest.getTitle(),postContentRequest.getDescription(),subject.get(),postContentRequest.getKeywords(),postContentRequest.getYear(), postContentRequest.getFile());
