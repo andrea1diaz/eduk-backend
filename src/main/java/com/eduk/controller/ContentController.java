@@ -70,13 +70,20 @@ public class ContentController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/recommendations")
+    public ResponseEntity<?> getRecommendations() {
+        Optional<List<Content>> contents = contentRepository.getContentsRandom();
+
+        return ResponseEntity.ok().body(contents.orElse(List.of()));
+    }
+
     @PostMapping("/post")
 		@PreAuthorize("hasRole('TEACHER')")
-    public ResponseEntity<String> postContent(@Valid @RequestBody ContentForm postContentRequest){
+    public ResponseEntity<String> postContent(@Valid @RequestBody ContentForm postContentRequest) {
         String file_link = postContentRequest.getFile();
-        String extension = file_link.substring(file_link.length()-3, file_link.length());
+        String extension = file_link.substring(file_link.length() - 3, file_link.length());
         Optional<Subject> subject = subjectRepository.findByName(postContentRequest.getSubject());
-        Content content = new Content(postContentRequest.getTitle(),postContentRequest.getDescription(),subject.get(),postContentRequest.getKeywords(),postContentRequest.getYear(), postContentRequest.getFile(), extension);
+        Content content = new Content(postContentRequest.getTitle(), postContentRequest.getDescription(), subject.get(), postContentRequest.getKeywords(), postContentRequest.getYear(), postContentRequest.getFile(), extension);
         User user = userRepository.findByEmail(postContentRequest.getEmail()).get();
         //User user = authenticationUtils.getUserObject();
         content.setUser(user);
@@ -89,5 +96,4 @@ public class ContentController {
 
 
     }
-
 }
