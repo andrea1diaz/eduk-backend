@@ -53,14 +53,14 @@ public class Content extends TimestampedEntity {
     public Content() {
     }
 
-    public Content(String title, String description, Subject subject, List<String> keywords, int year, String file) {
+    public Content(String title, String description, Subject subject, List<String> keywords, int year, String file, String extension) {
 			this.title = title;
 			this.description = description;
 			this.year = year;
 			this.subject = subject;
 			this.keywords = keywords;
 			this.score = 0.0;
-			this.extension = "pdf";
+			this.extension = extension;
 			this.file = file;
     }
 
@@ -127,4 +127,9 @@ public class Content extends TimestampedEntity {
     public void setYear(int year) {
       this.year = year;
     }
+
+    public String getFile() { return this.file; }
+
+    public String getExtension() { return this.extension; }
+
 }
