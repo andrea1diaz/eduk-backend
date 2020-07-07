@@ -14,4 +14,5 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
     Optional<Institution> getById(@Param("n") Integer id_);
 
     Optional<Institution> findById(Long id);
+    Optional<Institution> findByName(String name);
 }
