@@ -31,7 +31,12 @@ public class InstitutionController {
 
   @GetMapping("/get")
   public ResponseEntity<?> getInstitutions() {
-    List<Institution> response = institutionRepository.findAll();
+    List<Institution> schools = institutionRepository.findAll();
+    List<String> response = new ArrayList<String>();
+    for (int i = 0; i < schools.size(); i++){
+      String schoolName = schools.get(i).getName();
+      response.add(schoolName);
+    }
     return ResponseEntity.ok(response);
   }
 }
