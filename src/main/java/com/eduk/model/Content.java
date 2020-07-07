@@ -50,18 +50,27 @@ public class Content extends TimestampedEntity {
     @Max(6)
     private int year;
 
+    private int views;
+
+    private double upvotes;
+
+    private double downvotes;
+
     public Content() {
     }
 
     public Content(String title, String description, Subject subject, List<String> keywords, int year, String file, String extension) {
-			this.title = title;
-			this.description = description;
-			this.year = year;
-			this.subject = subject;
-			this.keywords = keywords;
-			this.score = 0.0;
-			this.extension = extension;
-			this.file = file;
+        this.title = title;
+        this.description = description;
+        this.year = year;
+        this.subject = subject;
+        this.keywords = keywords;
+        this.score = 0.0;
+        this.views = 0;
+        this.extension = extension;
+        this.file = file;
+        upvotes = 0.0;
+        downvotes = 0.0;
     }
 
 
@@ -97,9 +106,30 @@ public class Content extends TimestampedEntity {
       this.user = user;
     }
 
-    public void increaseScore(int points){
-        this.score += points;
+    public void upvote(){ System.out.println(this.upvotes);this.upvotes += 1; }
+
+    public void downvote(){ this.downvotes += 1; }
+
+    public void setUpvotes(double upvotes) {
+        this.upvotes = upvotes;
     }
+
+    public void setDownvotes(double downvotes) {
+        this.downvotes = downvotes;
+    }
+
+    public double getDownvotes() {
+        return downvotes;
+    }
+
+    public double getUpvotes() {
+        return upvotes;
+    }
+
+    public void calculateScore(){
+        this.score = 5*this.upvotes/(this.upvotes + this.downvotes);
+    }
+
     public Double getScore(){
         return this.score;
     }
@@ -131,5 +161,11 @@ public class Content extends TimestampedEntity {
     public String getFile() { return this.file; }
 
     public String getExtension() { return this.extension; }
+
+    public void setViews(int views) { this.views = views; }
+
+    public int getViews() { return views; }
+
+    public void increaseViews(){ this.views = this.views + 1; }
 
 }

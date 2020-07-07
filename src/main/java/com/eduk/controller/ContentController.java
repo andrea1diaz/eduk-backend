@@ -66,6 +66,9 @@ public class ContentController {
         Long id = Long.valueOf(contentId);
         Content content = contentRepository.findById(id).get();
         User user = content.getUser();
+        content.increaseViews();
+        content.calculateScore();
+        contentRepository.save(content);
         ContentResponse response = new ContentResponse(content, user.getFirstName() + " " + user.getLastName());
         return ResponseEntity.ok(response);
     }
