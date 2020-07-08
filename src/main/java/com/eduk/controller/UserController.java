@@ -41,7 +41,6 @@ public class UserController {
     @PatchMapping("")
     public ResponseEntity<?> partialUpdate(@Valid @RequestBody UpdateUserForm fields) {
         User user = authenticationUtils.getUserObject();
-
         Optional<String> firstName = fields.getFirstName();
         Optional<String> lastName = fields.getLastName();
         Optional<String> email = fields.getEmail();

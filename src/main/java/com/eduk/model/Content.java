@@ -106,9 +106,9 @@ public class Content extends TimestampedEntity {
       this.user = user;
     }
 
-    public void upvote(){ System.out.println(this.upvotes);this.upvotes += 1; }
+    public void upvoteChange(float number){ ;this.upvotes += number; }
 
-    public void downvote(){ this.downvotes += 1; }
+    public void downvoteChange(float number){ this.downvotes += number; }
 
     public void setUpvotes(double upvotes) {
         this.upvotes = upvotes;

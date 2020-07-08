@@ -10,6 +10,7 @@ import com.eduk.model.Vote;
 import com.eduk.repository.ContentRepository;
 import com.eduk.repository.VoteRepository;
 import com.eduk.repository.UserRepository;
+import com.sun.mail.iap.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,35 +37,71 @@ public class VoteController {
     @GetMapping("/{contentId}/{email}")
     public ResponseEntity<?> getVote(@PathVariable String contentId, @PathVariable String email) {
         Long id = Long.valueOf(contentId);
-
         Optional<Content> content = contentRepository.findById(id);
         Optional<User> user = userRepository.findByEmail(email);
         Boolean vote = voteRepository.existsByContentAndUser(content.get(), user.get());
         VoteResponse response = new VoteResponse();
         if (vote){
-            response.setVoted(true);
+            response.changeVoted();
             Vote object = voteRepository.findByContentAndUser(content.get(), user.get());
-            //if(object.getVote())
+            response.setSided(false);
+            if(object.getVote()){
+                response.setSided(true);
+            }
             return ResponseEntity.ok(response);
         }
-        else{
-            return ResponseEntity.ok(false);
-        }
+        return ResponseEntity.ok(response);
     }
 
 
     @PostMapping("/post")
-    public ResponseEntity<String> postComment(@Valid @RequestBody VoteForm postVoteRequest){
+    public ResponseEntity<String> postVote(@Valid @RequestBody VoteForm postVoteRequest){
         Vote vote = new Vote(postVoteRequest.getVote());
         User user = userRepository.findByEmail(postVoteRequest.getEmail()).get();
         Optional<Content> content = contentRepository.findById((postVoteRequest.getContent()));
         vote.setUser(user);
         vote.setContent(content.get());
-        if(postVoteRequest.getVote()) { content.get().upvote(); } else { content.get().downvote(); }
+        if(postVoteRequest.getVote()) { content.get().upvoteChange(1); } else { content.get().downvoteChange(1); }
         user.increasePoints(1);
         userRepository.save(user);
         contentRepository.save(content.get());
         voteRepository.save(vote);
         return ResponseEntity.ok().body("");
     }
+
+
+    @PatchMapping("/patch")
+    public ResponseEntity<?> patchVote(@Valid @RequestBody VoteForm patchVoteRequest){
+        Long id = Long.valueOf(patchVoteRequest.getContent());
+        Optional<Content> content = contentRepository.findById(id);
+        Optional<User> user = userRepository.findByEmail(patchVoteRequest.getEmail());
+        Vote vote = voteRepository.findByContentAndUser(content.get(), user.get());
+        vote.changeVote();
+        if(vote.getVote()){
+            content.get().upvoteChange(1); content.get().downvoteChange(-1);
+        }
+        else{
+            content.get().upvoteChange(-1); content.get().downvoteChange(1);
+        }
+        voteRepository.save(vote);
+        contentRepository.save(content.get());
+        return ResponseEntity.ok("Changed");
+    }
+
+    @DeleteMapping("/delete/{contentId}/{email}")
+    public ResponseEntity<?> deleteVote(@PathVariable String contentId, @PathVariable String email){
+        Optional<Content> content = contentRepository.findById(Long.parseLong(contentId));
+        Optional<User> user = userRepository.findByEmail(email);
+        Vote vote = voteRepository.findByContentAndUser(content.get(), user.get());
+        if(vote.getVote()){
+            content.get().upvoteChange(-1);;
+        }
+        else{
+            content.get().downvoteChange(-1);
+        }
+        voteRepository.delete(vote);
+        contentRepository.save(content.get());
+        return ResponseEntity.ok("Deleted");
+    }
+
 }

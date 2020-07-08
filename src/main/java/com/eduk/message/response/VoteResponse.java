@@ -1,21 +1,28 @@
 package com.eduk.message.response;
 
 public class VoteResponse {
-    private boolean voted;
+    public boolean voted;
 
-    private boolean sided;
+    public boolean sided;
 
     public void VoteResponse(){
-        voted = false;
-        sided = false;
+        this.voted = false;
+        this.sided = false;
     }
 
     public void setSided(boolean sided) {
         this.sided = sided;
     }
 
-    public void setVoted(boolean voted) {
-        this.voted = voted;
+    public void changeVoted() {
+        this.voted = !this.voted;
     }
 
+    public boolean getSided(){
+        return this.sided;
+    }
+
+    public boolean getVoted(){
+        return this.voted;
+    }
 }

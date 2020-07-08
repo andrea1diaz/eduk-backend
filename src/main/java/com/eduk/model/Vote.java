@@ -59,4 +59,6 @@ public class Vote {
     public void setVote(boolean vote) {
         this.vote = vote;
     }
+
+    public void changeVote(){ this.vote = !this.vote; }
 }
