@@ -56,6 +56,10 @@ public class Content extends TimestampedEntity {
 
     private double downvotes;
 
+    private double rating;
+
+    private int nrating;
+
     public Content() {
     }
 
@@ -124,6 +128,25 @@ public class Content extends TimestampedEntity {
 
     public double getUpvotes() {
         return upvotes;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public void addRating(double rating) {
+        this.rating = this.rating*this.nrating + rating;
+        this.nrating += 1;
+        this.rating /= this.nrating;
+    }
+
+    public void updateRating(double rating, double newrating) {
+        this.rating = this.rating*this.nrating - rating + newrating;
+        this.rating /= this.nrating;
+    }
+
+    public double getRating() {
+        return rating;
     }
 
     public void calculateScore(){
