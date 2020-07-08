@@ -88,7 +88,7 @@ public class AuthRestAPIs {
                 encoder.encode(registerRequest.getPassword()));
 
 
-        Institution institution = institutionRepository.findById(Long.parseLong(registerRequest.getInstitution())).get();
+        Institution institution = institutionRepository.findByName(registerRequest.getInstitution()).get();
         user.setInstitution(institution);
 
         Set<String> strRoles = registerRequest.getRole();
