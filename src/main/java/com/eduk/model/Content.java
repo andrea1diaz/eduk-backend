@@ -50,18 +50,31 @@ public class Content extends TimestampedEntity {
     @Max(6)
     private int year;
 
+    private int views;
+
+    private double upvotes;
+
+    private double downvotes;
+
+    private double rating;
+
+    private int nrating;
+
     public Content() {
     }
 
     public Content(String title, String description, Subject subject, List<String> keywords, int year, String file, String extension) {
-			this.title = title;
-			this.description = description;
-			this.year = year;
-			this.subject = subject;
-			this.keywords = keywords;
-			this.score = 0.0;
-			this.extension = extension;
-			this.file = file;
+        this.title = title;
+        this.description = description;
+        this.year = year;
+        this.subject = subject;
+        this.keywords = keywords;
+        this.score = 0.0;
+        this.views = 0;
+        this.extension = extension;
+        this.file = file;
+        upvotes = 0.0;
+        downvotes = 0.0;
     }
 
 
@@ -97,9 +110,56 @@ public class Content extends TimestampedEntity {
       this.user = user;
     }
 
-    public void increaseScore(int points){
-        this.score += points;
+    public void upvoteChange(float number){
+        this.upvotes += number;
+        calculateScore();}
+
+    public void downvoteChange(float number){
+        this.downvotes += number;
+        calculateScore();
     }
+
+    public void setUpvotes(double upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    public void setDownvotes(double downvotes) {
+        this.downvotes = downvotes;
+    }
+
+    public double getDownvotes() {
+        return downvotes;
+    }
+
+    public double getUpvotes() {
+        return upvotes;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public void addRating(double rating) {
+        this.rating = this.rating*this.nrating + rating;
+        this.nrating += 1;
+        this.rating /= this.nrating;
+    }
+
+    public void updateRating(double rating, double newrating) {
+        this.rating = this.rating*this.nrating - rating + newrating;
+        this.rating /= this.nrating;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void calculateScore(){
+        double total = this.upvotes + this.downvotes;
+        if (total != 0) {this.score = 5*this.upvotes/(this.upvotes + this.downvotes); }
+        else { this.score = 0.0; }
+    }
+
     public Double getScore(){
         return this.score;
     }
@@ -131,5 +191,11 @@ public class Content extends TimestampedEntity {
     public String getFile() { return this.file; }
 
     public String getExtension() { return this.extension; }
+
+    public void setViews(int views) { this.views = views; }
+
+    public int getViews() { return views; }
+
+    public void increaseViews(){ this.views = this.views + 1; }
 
 }

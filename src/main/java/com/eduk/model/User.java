@@ -125,6 +125,7 @@ public class User extends TimestampedEntity {
         return this.points;
     }
 
+    public void increasePoints(int points){ this.points += 1; }
     public long getInstitution() {
         return institution.getId();
     }

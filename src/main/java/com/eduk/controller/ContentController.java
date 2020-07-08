@@ -66,13 +66,16 @@ public class ContentController {
         Long id = Long.valueOf(contentId);
         Content content = contentRepository.findById(id).get();
         User user = content.getUser();
+        content.increaseViews();
+        content.calculateScore();
+        contentRepository.save(content);
         ContentResponse response = new ContentResponse(content, user.getFirstName() + " " + user.getLastName());
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/recommendations")
     public ResponseEntity<?> getRecommendations() {
-        Optional<List<Content>> contents = contentRepository.getContentsRandom();
+        Optional<List<Content>> contents = contentRepository.getContentsAll();
 
         return ResponseEntity.ok().body(contents.orElse(List.of()));
     }
