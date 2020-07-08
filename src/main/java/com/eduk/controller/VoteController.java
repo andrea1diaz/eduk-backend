@@ -2,6 +2,7 @@ package com.eduk.controller;
 
 import com.eduk.message.request.VoteForm;
 import com.eduk.message.response.CommentsResponse;
+import com.eduk.message.response.VoteResponse;
 import com.eduk.model.Comment;
 import com.eduk.model.Content;
 import com.eduk.model.User;
@@ -39,16 +40,14 @@ public class VoteController {
         Optional<Content> content = contentRepository.findById(id);
         Optional<User> user = userRepository.findByEmail(email);
         Boolean vote = voteRepository.existsByContentAndUser(content.get(), user.get());
+        VoteResponse response = new VoteResponse();
         if (vote){
-            System.out.println("--------------------------");
-            System.out.println(true);
-            System.out.println("--------------------------");
-            return ResponseEntity.ok(true);
+            response.setVoted(true);
+            Vote object = voteRepository.findByContentAndUser(content.get(), user.get());
+            //if(object.getVote())
+            return ResponseEntity.ok(response);
         }
         else{
-            System.out.println("--------------------------");
-            System.out.println(false);
-            System.out.println("--------------------------");
             return ResponseEntity.ok(false);
         }
     }

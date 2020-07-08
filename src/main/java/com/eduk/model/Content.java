@@ -127,7 +127,8 @@ public class Content extends TimestampedEntity {
     }
 
     public void calculateScore(){
-        this.score = 5*this.upvotes/(this.upvotes + this.downvotes);
+        double total = this.upvotes + this.downvotes;
+        if (total != 0) {this.score = 5*this.upvotes/(this.upvotes + this.downvotes); }
     }
 
     public Double getScore(){

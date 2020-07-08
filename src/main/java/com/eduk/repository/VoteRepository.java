@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 
     Boolean existsByContentAndUser(Content content, User user);
+
+    Vote findByContentAndUser(Content content, User user);
 }
