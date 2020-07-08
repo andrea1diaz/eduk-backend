@@ -110,9 +110,14 @@ public class Content extends TimestampedEntity {
       this.user = user;
     }
 
-    public void upvoteChange(float number){ ;this.upvotes += number; }
+    public void upvoteChange(float number){
+        this.upvotes += number;
+        calculateScore();}
 
-    public void downvoteChange(float number){ this.downvotes += number; }
+    public void downvoteChange(float number){
+        this.downvotes += number;
+        calculateScore();
+    }
 
     public void setUpvotes(double upvotes) {
         this.upvotes = upvotes;
@@ -152,6 +157,7 @@ public class Content extends TimestampedEntity {
     public void calculateScore(){
         double total = this.upvotes + this.downvotes;
         if (total != 0) {this.score = 5*this.upvotes/(this.upvotes + this.downvotes); }
+        else { this.score = 0.0; }
     }
 
     public Double getScore(){
