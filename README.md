@@ -3,6 +3,8 @@
 To run the server
 `mvn spring-boot:run`
 
+Just in case, you can also do `mvn clean install` beforehand
+
 ### SpringBoot + JPA + Postgres
 
 Dependencies
