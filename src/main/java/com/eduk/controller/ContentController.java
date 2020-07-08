@@ -81,7 +81,7 @@ public class ContentController {
     }
 
     @PostMapping("/post")
-		@PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<String> postContent(@Valid @RequestBody ContentForm postContentRequest) {
         String file_link = postContentRequest.getFile();
         String extension = file_link.substring(file_link.length() - 3, file_link.length());

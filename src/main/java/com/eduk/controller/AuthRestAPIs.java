@@ -6,7 +6,6 @@ import com.eduk.message.response.JwtResponse;
 
 import com.eduk.model.*;
 import com.eduk.repository.InstitutionRepository;
-import com.eduk.repository.RoleRepository;
 import com.eduk.repository.UserRepository;
 import com.eduk.repository.TeacherRepository;
 import com.eduk.security.jwt.JwtToken;
@@ -22,13 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.Formatter;
-import java.util.HashSet;
-import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -48,9 +41,6 @@ public class AuthRestAPIs {
 
     @Autowired
     InstitutionRepository institutionRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -91,33 +81,20 @@ public class AuthRestAPIs {
         Institution institution = institutionRepository.findByName(registerRequest.getInstitution()).get();
         user.setInstitution(institution);
 
-        Set<String> strRoles = registerRequest.getRole();
-        Set<Role> roles = new HashSet<Role>();
+        String strRoles = registerRequest.getRole();
+        System.out.println(strRoles);
 
-        strRoles.forEach(role -> {
-            switch (role) {
-                case "ROLE_TEACHER":
-                    Role teacherRole = roleRepository.findByName(RoleName.ROLE_TEACHER)
-                            .orElseThrow(() -> new RuntimeException("Error: User Role not found"));
-                    roles.add(teacherRole);
+            if (strRoles.equals("ROLE_TEACHER")) {
 
-                    /*Teacher teacher = new Teacher();
-                    User t_user = userRepository.findByEmail(registerRequest.getEmail()).get();
-                    teacher.setUser(t_user);
-                    teacher.setInstitution(t_institution);
-                    teacherRepository.save(teacher);*/
-
-                    break;
-                case "ROLE_STUDENT":
-                    Role studentRole = roleRepository.findByName(RoleName.ROLE_STUDENT)
-                            .orElseThrow(() -> new RuntimeException("Error: User Role not found"));
-                    roles.add(studentRole);
-
-                    break;
+                user.setRole(RoleName.ROLE_TEACHER);
+                /*Teacher teacher = new Teacher();
+                User t_user = userRepository.findByEmail(registerRequest.getEmail()).get();
+                teacher.setUser(t_user);
+                teacher.setInstitution(t_institution);
+                teacherRepository.save(teacher);*/
+            } else {
+                user.setRole(RoleName.ROLE_STUDENT);
             }
-        });
-
-        user.setRoles(roles);
         userRepository.save(user);
 
         return ResponseEntity.ok().body("User registered successfully!");

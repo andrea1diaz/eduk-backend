@@ -51,10 +51,10 @@ public class User extends TimestampedEntity {
     @JoinColumn(name = "institution_id")
     private Institution institution;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    @NaturalId
+    @Column(length = 60)
+    private RoleName rolename;
 
     private String photo_url;
 
@@ -101,20 +101,29 @@ public class User extends TimestampedEntity {
         this.email = email;
     }
 
+    public RoleName getRole(){
+        return this.rolename;
+    }
+
+    public String getRoleName() {
+        if (this.rolename == RoleName.ROLE_TEACHER) {
+            return "ROLE_TEACHER";
+        }
+        else {
+            return "ROLE_STUDENT";
+        }
+    }
+
+    public void setRole(RoleName rolename) {
+        this.rolename = rolename;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 
     public void setPoints(Integer points) {

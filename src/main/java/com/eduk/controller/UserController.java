@@ -28,6 +28,7 @@ public class UserController {
 
     @Autowired
     InstitutionRepository institutionRepository;
+
     @Autowired
     PasswordEncoder encoder;
 
@@ -35,6 +36,7 @@ public class UserController {
     public ResponseEntity<?> userInfo() {
 
         User user = authenticationUtils.getUserObject();
+
         return ResponseEntity.ok(user);
     }
 

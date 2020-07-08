@@ -21,7 +21,7 @@ public class RegisterForm {
     @Email
     private String email;
 
-    private Set<String> role;
+    private String role;
 
     @NotBlank
     @Size(min = 6, max = 40)
@@ -66,8 +66,8 @@ public class RegisterForm {
 
     public void setInstitution(String institution) { this.institution = institution; }
 
-    public Set<String> getRole() { return this.role; }
+    public String getRole() { return this.role; }
 
-    public void setRole(Set<String> role) { this.role = role; }
+    public void setRole(String role) { this.role = role; }
 }
 
