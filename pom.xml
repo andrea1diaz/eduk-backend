@@ -17,7 +17,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>13</java.version>
+				<java.version>13</java.version>
+				<sonar.projectKey>andrea1diaz_eduk-backend</sonar.projectKey>
+				<sonar.organization>andrea1diaz</sonar.organization>
+				<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+				<sonar.login>da62e1edd919b60f4cd2513b326dee60f79b09c0</sonar.login>
     </properties>
 
     <dependencies>
