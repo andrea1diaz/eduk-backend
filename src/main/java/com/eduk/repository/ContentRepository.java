@@ -15,7 +15,7 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
 
     Optional<Content> findById(long id);
 
-    @Query(value = "SELECT * FROM contents ORDER BY rating DESC, score DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM contents ORDER BY rating DESC, score DESC LIMIT 4", nativeQuery = true)
 	Optional<List<Content>> getContentsAll();
 
     @Query(value = "SELECT * FROM contents NATURAL JOIN (SELECT content_id AS id FROM keywords K WHERE K.keywords IN :selected_keywords) AS K ORDER BY rating ASC", nativeQuery = true)
