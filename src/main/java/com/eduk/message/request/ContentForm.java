@@ -7,6 +7,8 @@ import java.util.List;
 
 public class ContentForm {
 
+    private String id;
+
     @Size(min = 3, max = 60)
     private String title;
 
@@ -32,5 +34,7 @@ public class ContentForm {
     public String getFile() { return file; }
     public int getYear() { return year; }
 
-
+    public String getId() {
+        return id;
+    }
 }

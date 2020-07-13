@@ -1,10 +1,12 @@
 package com.eduk.controller;
 
+import com.eduk.message.request.VoteForm;
 import com.eduk.message.response.ContentResponse;
 import com.eduk.model.Content;
 import com.eduk.message.request.ContentForm;
 import com.eduk.model.Subject;
 import com.eduk.model.User;
+import com.eduk.model.Vote;
 import com.eduk.repository.ContentRepository;
 import com.eduk.repository.SubjectRepository;
 import com.eduk.repository.UserRepository;
@@ -98,5 +100,30 @@ public class ContentController {
         return ResponseEntity.ok().body(Long.toString(content.getId()));
 
 
+    }
+
+    @PatchMapping("/patch")
+    @PreAuthorize("hasRole('TEACHER')")
+    public ResponseEntity<?> patchVote(@Valid @RequestBody ContentForm patchContentRequest){
+        Long id = Long.valueOf(patchContentRequest.getId());
+        Optional<Content> content = contentRepository.findById(id);
+
+        String title = patchContentRequest.getTitle();
+        String description = patchContentRequest.getDescription();
+        Optional<Subject> subject = subjectRepository.findByName(patchContentRequest.getSubject());
+        List<String> keywords = patchContentRequest.getKeywords();
+        int year = patchContentRequest.getYear();
+        if (content.isPresent()) {
+            Content content2 = content.get();
+            content2.setTitle(title);
+            content2.setDescription(description);
+            if (subject.isPresent()){
+                content2.setSubject(subject.get());
+            }
+            content2.setKeywords(keywords);
+            content2.setYear(year);
+        }
+        contentRepository.save(content.get());
+        return ResponseEntity.ok("Changed");
     }
 }
