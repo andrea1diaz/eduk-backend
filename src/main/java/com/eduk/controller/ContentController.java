@@ -26,8 +26,10 @@ import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -46,22 +48,46 @@ public class ContentController {
     @Autowired
     AuthenticationUtils authenticationUtils;
 
-		@GetMapping("")
-		public ResponseEntity<?> getContentByKeywords (@RequestParam(required = false) Optional<List<String>> keywords) {
-			Optional<List<Content>> contents;
+    @GetMapping("")
+    public ResponseEntity<?> getContentByKeywords (@RequestParam(required = false) Optional<List<String>> keywords) {
+        Optional<List<Content>> contents;
 
-			if (keywords.isPresent()) {
-				if (keywords.get().isEmpty()) {
-					return ResponseEntity.badRequest().body(RequestMessages.QUESTION_KEYWORD_EMPTY);
-				}
-				contents = contentRepository.getContentByKeywords(keywords.get());
-			}
-			else {
-				contents = contentRepository.getContentsAll();
-			}
+        if (keywords.isPresent()) {
+            if (keywords.get().isEmpty()) {
+                return ResponseEntity.badRequest().body(RequestMessages.QUESTION_KEYWORD_EMPTY);
+            }
+            contents = contentRepository.getContentByKeywords(keywords.get());
+        }
+        else {
+            contents = contentRepository.getContentsAll();
+        }
 
-			return ResponseEntity.ok().body(contents.orElse(List.of()));
-		}
+        return ResponseEntity.ok().body(contents.orElse(List.of()));
+    }
+
+    @GetMapping("/user/{userEmail}")
+    public ResponseEntity<?> getUserContent(@PathVariable String userEmail) {
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        List<Content> contents = new ArrayList<Content>();
+
+        if (user.isPresent()) {
+            contents = contentRepository.findAllByUser(user.get());
+            return ResponseEntity.ok().body(contents);
+        }
+        return ResponseEntity.ok().body(contents);
+    }
+
+    @GetMapping("/subject/{subjectName}")
+    public ResponseEntity<?> getSubjectContent(@PathVariable String subjectName) {
+        Optional<Subject> subject = subjectRepository.findByName(subjectName);
+        List<Content> contents = new ArrayList<Content>();
+
+        if (subject.isPresent()) {
+            contents = contentRepository.findAllBySubject(subject.get());
+            return ResponseEntity.ok().body(contents);
+        }
+        return ResponseEntity.ok().body(contents);
+    }
 
     @GetMapping("/{contentId}")
     public ResponseEntity<?> getContent(@PathVariable String contentId) {
