@@ -79,11 +79,13 @@ public class ContentController {
 
     @GetMapping("/subject/{subjectName}")
     public ResponseEntity<?> getSubjectContent(@PathVariable String subjectName) {
-        Optional<Subject> subject = subjectRepository.findByName(subjectName);
-        List<Content> contents = new ArrayList<Content>();
+        // Optional<Subject> subject = subjectRepository.findByName(subjectName);
+        // List<Content> contents = new ArrayList<Content>();
 
         if (subject.isPresent()) {
-            contents = contentRepository.findAllBySubject(subject.get());
+            // contents = contentRepository.findBySubject(subject.get());
+            contents = contentRepository.findBySubject(subjectName);
+
             return ResponseEntity.ok().body(contents);
         }
         return ResponseEntity.ok().body(contents);
