@@ -31,6 +31,6 @@ public interface ViewRepository extends JpaRepository<View, Long> {
             "GROUP BY subject_id) v " +
             "WHERE s.id = v.subject_id " +
             "ORDER BY v.cont " +
-            "LIMIT 1 ", nativeQuery = true)
+            "DESC LIMIT 1", nativeQuery = true)
     String getFavSubject(@Param("id") Long id);
 }

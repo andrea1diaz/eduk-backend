@@ -145,7 +145,7 @@ public class ContentController {
         Long totalComments = commentRepository.getTotalComments(id);
         Long totalVotes = voteRepository.getTotalVotes(id);
         Long totalContents = contentRepository.getTotalContents(id);
-        Long avgRating = rateRepository.getAvgRating(id);
+        Double avgRating = rateRepository.getAvgRating(id);
         String favSubject = viewRepository.getFavSubject(id);
         StatsResponse response = new StatsResponse(gviews, totalViews, totalComments, totalVotes,
                 totalContents, avgRating, favSubject);

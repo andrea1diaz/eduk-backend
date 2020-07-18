@@ -11,13 +11,13 @@ public class StatsResponse {
     public Long totalVotes;
     public Long totalComments;
     public Long totalContents;
-    public Long avgRating;
+    public double avgRating;
     public String favSubject;
 
     public StatsResponse(){}
 
     public StatsResponse(List<?> views, Long totalViews, Long totalComments, Long totalVotes,
-                         Long totalContents, Long avgRating, String favSubject){
+                         Long totalContents, Double avgRating, String favSubject){
         this.views = views;
         this.totalViews = totalViews;
         this.totalComments = totalComments;
