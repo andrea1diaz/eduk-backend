@@ -32,4 +32,7 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
     @Query(value = "SELECT * FROM contents ORDER BY RANDOM() LIMIT 4", nativeQuery = true)
 	Optional<List<Content>> getContentsRandom();
 
+    @Query(value = "SELECT COUNT(*) AS totalContents FROM contents WHERE user_id=:id", nativeQuery = true)
+    Long getTotalContents(@Param("id") Long id);
+
 }
