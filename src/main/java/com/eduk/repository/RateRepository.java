@@ -6,6 +6,7 @@ import com.eduk.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface RateRepository extends JpaRepository<Rate, Long> {
     Boolean existsByContentAndUser(Content content, User user);
 
     Rate findByContentAndUser(Content content, User user);
+
+    @Query(value = "SELECT AVG(rate) AS avgRating FROM rating WHERE user_id=:id", nativeQuery = true)
+    Long getAvgRating(@Param("id") Long id);
 }

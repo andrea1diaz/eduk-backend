@@ -2,20 +2,24 @@ package com.eduk.controller;
 
 import com.eduk.message.request.VoteForm;
 import com.eduk.message.response.ContentResponse;
-import com.eduk.model.Content;
+import com.eduk.message.response.StatsResponse;
+import com.eduk.model.*;
 import com.eduk.message.request.ContentForm;
-import com.eduk.model.Subject;
-import com.eduk.model.User;
-import com.eduk.model.Vote;
 import com.eduk.repository.ContentRepository;
 import com.eduk.repository.SubjectRepository;
+import com.eduk.repository.CommentRepository;
 import com.eduk.repository.UserRepository;
+import com.eduk.repository.ViewRepository;
+import com.eduk.repository.VoteRepository;
+import com.eduk.repository.RateRepository;
 import com.eduk.security.utils.AuthenticationUtils;
 import com.eduk.message.response.SuccessfulCreation;
 import com.eduk.message.response.RequestMessages;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.sun.mail.iap.Response;
+import org.springframework.cache.support.NullValue;
+import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.util.ReflectionUtils;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 import javax.websocket.server.PathParam;
 import java.lang.reflect.Field;
 import java.net.URL;
@@ -43,7 +48,19 @@ public class ContentController {
     UserRepository userRepository;
 
     @Autowired
+    ViewRepository viewRepository;
+
+    @Autowired
+    VoteRepository voteRepository;
+
+    @Autowired
+    RateRepository rateRepository;
+
+    @Autowired
     SubjectRepository subjectRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     @Autowired
     AuthenticationUtils authenticationUtils;
@@ -89,14 +106,20 @@ public class ContentController {
         return ResponseEntity.ok().body(contents);
     }
 
-    @GetMapping("/{contentId}")
-    public ResponseEntity<?> getContent(@PathVariable String contentId) {
+    @GetMapping("/{contentId}/{userId}")
+    public ResponseEntity<?> getContent(@PathVariable String contentId, @PathVariable String userId) {
         Long id = Long.valueOf(contentId);
+        Long userid = Long.valueOf(userId);
         Content content = contentRepository.findById(id).get();
         User user = content.getUser();
-        content.increaseViews();
-        content.calculateScore();
-        contentRepository.save(content);
+        User user_view = userRepository.findById(userid).get();
+        if(!viewRepository.existsByContentAndUser(content,user_view)) {
+            View view = new View(user_view,content);
+            content.increaseViews();
+            contentRepository.save(content);
+            content.calculateScore();
+            viewRepository.save(view);
+        }
         ContentResponse response = new ContentResponse(content, user.getFirstName() + " " + user.getLastName());
         return ResponseEntity.ok(response);
     }
@@ -106,6 +129,28 @@ public class ContentController {
         Optional<List<Content>> contents = contentRepository.getContentsAll();
 
         return ResponseEntity.ok().body(contents.orElse(List.of()));
+    }
+
+    @GetMapping("/stats/{userId}")
+    public ResponseEntity<?> getStats(@PathVariable String userId) {
+        Long id = Long.valueOf(userId);
+        System.out.println("El id es: " + id);
+        Optional<List<?>> views = viewRepository.getSubjectViews(id);
+        List<?> gviews = new ArrayList<List>();
+        if(!views.isEmpty()){
+            gviews = views.get();
+        }
+        System.out.println("Los views son: " + views);
+        Long totalViews = viewRepository.getTotalViews(id);
+        Long totalComments = commentRepository.getTotalComments(id);
+        Long totalVotes = voteRepository.getTotalVotes(id);
+        Long totalContents = contentRepository.getTotalContents(id);
+        Long avgRating = rateRepository.getAvgRating(id);
+        String favSubject = viewRepository.getFavSubject(id);
+        StatsResponse response = new StatsResponse(gviews, totalViews, totalComments, totalVotes,
+                totalContents, avgRating, favSubject);
+
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/post")

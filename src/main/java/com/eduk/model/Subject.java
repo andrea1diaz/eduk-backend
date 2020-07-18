@@ -21,6 +21,10 @@ public class Subject{
     @Size(min = 1, max = 60, message = "Subject name length must be between 1 and 60")
     private String name;
 
+    @NotBlank
+    @Size(min = 1, max = 60)
+    private String title;
+
     @OneToMany(mappedBy = "subject")
     private Set<Content> contents;
 
