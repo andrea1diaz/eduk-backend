@@ -6,8 +6,8 @@ public class ContentResponse {
     public Content content;
 
     public String user_name;
-
-    public ContentResponse(Content content, String username){
+		
+    public ContentResponse(Content content, String username) {
         this.content = content;
         this.user_name = username;
     }
