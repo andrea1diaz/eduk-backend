@@ -21,8 +21,8 @@
 				<sonar.projectKey>andrea1diaz_eduk-backend</sonar.projectKey>
 				<sonar.organization>andrea1diaz</sonar.organization>
 				<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-				<sonar.login>da62e1edd919b60f4cd2513b326dee60f79b09c0</sonar.login>
-    </properties>
+				<sonar.login>0be066ea6f9f3e381faca2db33a6220ffcb26456</sonar.login>
+		</properties>
 
     <dependencies>
         <dependency>
@@ -122,6 +122,11 @@
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
             <version>1.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>2.2.2.RELEASE</version>
         </dependency>
     </dependencies>
 
