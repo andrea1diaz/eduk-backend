@@ -97,7 +97,7 @@ public class ContentController {
         content.increaseViews();
         content.calculateScore();
         contentRepository.save(content);
-        ContentResponse response = new ContentResponse(content, user.getFirstName() + " " + user.getLastName(), user.getPhoto_url());
+        ContentResponse response = new ContentResponse(content, user.getFirstName() + " " + user.getLastName());
         return ResponseEntity.ok(response);
     }
 

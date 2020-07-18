@@ -41,7 +41,8 @@ public class CommentController {
         for (int i = 0; i < comments.size(); i++) {
             String comentario = comments.get(i).getComentario();
             String usuario = comments.get(i).getUser().getFirstName() + " " + comments.get(i).getUser().getLastName();
-            CommentsResponse item = new CommentsResponse(comentario, usuario);
+						String photo_url = comments.get(i).getUser().getPhoto_url();
+            CommentsResponse item = new CommentsResponse(comentario, usuario, photo_url);
             response.add(item);
         }
         return ResponseEntity.ok(response);
