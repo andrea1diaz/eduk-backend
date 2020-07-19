@@ -5,12 +5,13 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "views")
-public class View {
+public class View implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -16,6 +16,8 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
 
     Vote findByContentAndUser(Content content, User user);
 
+    long deleteByContent(Content content);
+
     @Query(value = "SELECT COUNT(*) AS totalComments FROM likes WHERE user_id=:id", nativeQuery = true)
     Long getTotalVotes(@Param("id") Long id);
 }

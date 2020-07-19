@@ -197,4 +197,24 @@ public class ContentController {
         contentRepository.save(content.get());
         return ResponseEntity.ok("Changed");
     }
+
+    @DeleteMapping("/delete/{contentId}")
+    @PreAuthorize("hasRole('TEACHER')")
+    public ResponseEntity<?> deleteContent(@PathVariable String contentId){
+        Long id = Long.valueOf(contentId);
+        Optional<Content> content = contentRepository.findById(id);
+        if(content.isPresent()) {
+            Content cont = content.get();
+            long comments = commentRepository.deleteByContent(cont);
+            long rate = rateRepository.deleteByContent(cont);
+            viewRepository.deletebyContent(id);
+//            List<View> views = viewRepository.findAllByContent(cont);
+//            for (int i = 0; i < views.size(); i++) {
+//                viewRepository.delete(views.get(i));
+//            }
+            long vote = voteRepository.deleteByContent(cont);
+            contentRepository.deleteById(id);
+        }
+        return ResponseEntity.ok("Deleted");
+    }
 }

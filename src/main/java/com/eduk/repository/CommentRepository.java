@@ -15,6 +15,8 @@ import java.util.Optional;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     Optional<Comment> findById(long id);
 
+    long deleteByContent(Content content);
+
     List<Comment> findAllByContent(Content content);
 
     @Query(value = "SELECT COUNT(*) AS totalComments FROM comments WHERE user_id=:id", nativeQuery = true)
