@@ -22,5 +22,5 @@ public interface RateRepository extends JpaRepository<Rate, Long> {
     Rate findByContentAndUser(Content content, User user);
 
     @Query(value = "SELECT AVG(rate) AS avgRating FROM rating WHERE user_id=:id", nativeQuery = true)
-    Double getAvgRating(@Param("id") Long id);
+    Optional<Double> getAvgRating(@Param("id") Long id);
 }

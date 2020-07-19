@@ -145,8 +145,16 @@ public class ContentController {
         Long totalComments = commentRepository.getTotalComments(id);
         Long totalVotes = voteRepository.getTotalVotes(id);
         Long totalContents = contentRepository.getTotalContents(id);
-        Double avgRating = rateRepository.getAvgRating(id);
-        String favSubject = viewRepository.getFavSubject(id);
+        Optional<Double> avg = rateRepository.getAvgRating(id);
+        Double avgRating = 0.0;
+        if(!avg.isEmpty()){
+            avgRating = avg.get();
+        }
+        Optional<String> fav = viewRepository.getFavSubject(id);
+        String favSubject = "-";
+        if(!avg.isEmpty()){
+            favSubject = fav.get();
+        }
         StatsResponse response = new StatsResponse(gviews, totalViews, totalComments, totalVotes,
                 totalContents, avgRating, favSubject);
 
