@@ -32,5 +32,5 @@ public interface ViewRepository extends JpaRepository<View, Long> {
             "WHERE s.id = v.subject_id " +
             "ORDER BY v.cont " +
             "DESC LIMIT 1", nativeQuery = true)
-    String getFavSubject(@Param("id") Long id);
+    Optional<String> getFavSubject(@Param("id") Long id);
 }

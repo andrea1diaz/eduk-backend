@@ -11,7 +11,7 @@ public class StatsResponse {
     public Long totalVotes;
     public Long totalComments;
     public Long totalContents;
-    public double avgRating;
+    public Double avgRating;
     public String favSubject;
 
     public StatsResponse(){}
