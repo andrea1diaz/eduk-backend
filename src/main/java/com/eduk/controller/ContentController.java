@@ -18,6 +18,7 @@ import com.eduk.message.response.RequestMessages;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.sun.mail.iap.Response;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.cache.support.NullValue;
 import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
@@ -205,7 +206,8 @@ public class ContentController {
         contentRepository.save(content.get());
         return ResponseEntity.ok("Changed");
     }
-
+	
+		@Transactional
     @DeleteMapping("/delete/{contentId}")
     @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<?> deleteContent(@PathVariable String contentId){
