@@ -5,15 +5,28 @@ import com.eduk.model.User;
 import com.eduk.model.View;
 import com.eduk.model.Subject;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.io.Serializable;
 import java.util.*;
 import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
 
 @Repository
 public interface ViewRepository extends JpaRepository<View, Long> {
 
     Boolean existsByContentAndUser(Content content, User user);
+
+    List<View> findAllByContent(Content content);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE " +
+            "FROM views WHERE content_id=:id ", nativeQuery = true)
+    void deletebyContent(@Param("id") Long id);
 
     @Query(value = "SELECT s.name, s.title, v.cont " +
             "FROM subjects s, (SELECT subject_id, COUNT(*) AS cont FROM views WHERE user_id=:id " +
