@@ -152,7 +152,7 @@ public class ContentController {
         }
         Optional<String> fav = viewRepository.getFavSubject(id);
         String favSubject = "-";
-        if(!avg.isEmpty()){
+        if(!fav.isEmpty()){
             favSubject = fav.get();
         }
         StatsResponse response = new StatsResponse(gviews, totalViews, totalComments, totalVotes,
