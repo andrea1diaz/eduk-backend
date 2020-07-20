@@ -4,7 +4,7 @@ import com.eduk.model.Content;
 
 import com.eduk.model.Subject;
 import com.eduk.model.User;
-import org.apache.lucene.index.DocIDMerger;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,7 +25,14 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
     @Query(value = "SELECT * FROM contents ORDER BY rating DESC, score DESC LIMIT 4", nativeQuery = true)
 	Optional<List<Content>> getContentsAll();
 
-    @Query(value = "SELECT * FROM contents NATURAL JOIN (SELECT content_id AS id FROM keywords K WHERE K.keywords IN :selected_keywords) AS K ORDER BY rating ASC", nativeQuery = true)
+    @Query(value = "SELECT * " +
+            "FROM contents c " +
+            "JOIN keywords k ON k.content_id = c.id " +
+            "JOIN subjects s ON s.id = c.subject_id " +
+            "WHERE k.keywords IN :selected_keywords " +
+            "OR s.name = IN :selected_keywords " +
+            "ORDER BY rating DESC"
+            , nativeQuery = true)
 	Optional<List<Content>> getContentByKeywords(@Param("selected_keywords") List<String> keywords);
 
 
