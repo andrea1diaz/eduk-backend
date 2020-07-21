@@ -17,14 +17,20 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-				<java.version>13</java.version>
-				<sonar.projectKey>andrea1diaz_eduk-backend</sonar.projectKey>
-				<sonar.organization>andrea1diaz</sonar.organization>
-				<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-				<sonar.login>0be066ea6f9f3e381faca2db33a6220ffcb26456</sonar.login>
-		</properties>
+        <java.version>13</java.version>
+        <sonar.projectKey>andrea1diaz_eduk-backend</sonar.projectKey>
+        <sonar.organization>andrea1diaz</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.login>0be066ea6f9f3e381faca2db33a6220ffcb26456</sonar.login>
+        <testng.version>6.8.7</testng.version>
+    </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
