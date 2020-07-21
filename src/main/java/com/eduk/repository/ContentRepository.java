@@ -30,7 +30,7 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
             "JOIN keywords k ON k.content_id = c.id " +
             "JOIN subjects s ON s.id = c.subject_id " +
             "WHERE k.keywords IN :selected_keywords " +
-            "OR s.name = IN :selected_keywords " +
+            "OR s.name IN :selected_keywords " +
             "ORDER BY rating DESC"
             , nativeQuery = true)
 	Optional<List<Content>> getContentByKeywords(@Param("selected_keywords") List<String> keywords);
