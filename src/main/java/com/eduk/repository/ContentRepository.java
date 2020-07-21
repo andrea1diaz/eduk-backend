@@ -36,7 +36,7 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
 	Optional<List<Content>> getContentByKeywords(@Param("selected_keywords") List<String> keywords);
 
 	@Query(value = "SELECT * FROM contents WHERE subject_id = :selected_subject ORDER BY rating DESC, score DESC LIMIT 4", nativeQuery = true)
-	Optional<List<Content>> getBySubject(@Param("selected_subject") int subjectId);
+	Optional<List<Content>> getBySubject(@Param("selected_subject") Long subjectId);
 
     @Query(value = "SELECT * FROM contents ORDER BY RANDOM() LIMIT 4", nativeQuery = true)
 	Optional<List<Content>> getContentsRandom();
