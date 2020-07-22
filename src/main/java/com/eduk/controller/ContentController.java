@@ -68,7 +68,7 @@ public class ContentController {
             contents = contentRepository.getContentsAll();
         }
 
-        return ResponseEntity.ok().body(contents.orElse(List.of()));
+        return ResponseEntity.ok().body("Done");
     }
 
     @GetMapping("/user/{userEmail}")
@@ -117,7 +117,7 @@ public class ContentController {
     public ResponseEntity<?> getRecommendations() {
         Optional<List<Content>> contents = contentRepository.getContentsAll();
 
-        return ResponseEntity.ok().body(contents.orElse(List.of()));
+        return ResponseEntity.ok().body("Done");
     }
 
     @GetMapping("/stats/{userId}")
