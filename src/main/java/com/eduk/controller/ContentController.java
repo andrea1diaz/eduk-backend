@@ -86,13 +86,14 @@ public class ContentController {
     @GetMapping("/subject/{subjectId}")
     public ResponseEntity<?> getSubjectContent(@PathVariable Long subjectId) {
         Optional<Subject> subject = subjectRepository.findById(subjectId);
-
+        List<Content> contents = new ArrayList<Content>();
         if (subject.isPresent()) {
-            Optional<List<Content>> contents = contentRepository.getBySubject(subjectId);
-
-            return ResponseEntity.ok().body(contents.get());
+            Optional<List<Content>> optContents = contentRepository.getBySubject(subjectId);
+            if(optContents.isPresent()){
+                contents = optContents.get();
+            }
         }
-        return ResponseEntity.ok().body("Done");
+        return ResponseEntity.ok().body(contents);
     }
 
     @GetMapping("/{contentId}/{userId}")
