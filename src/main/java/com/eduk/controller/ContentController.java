@@ -90,7 +90,7 @@ public class ContentController {
         if (subject.isPresent()) {
             Optional<List<Content>> contents = contentRepository.getBySubject(subjectId);
 
-            return ResponseEntity.ok().body(contents);
+            return ResponseEntity.ok().body(contents.get());
         }
         return ResponseEntity.ok().body("Done");
     }
