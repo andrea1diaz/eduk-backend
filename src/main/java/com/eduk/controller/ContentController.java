@@ -116,8 +116,7 @@ public class ContentController {
     @GetMapping("/recommendations")
     public ResponseEntity<?> getRecommendations() {
         Optional<List<Content>> contents = contentRepository.getContentsAll();
-
-        return ResponseEntity.ok().body("Done");
+        return ResponseEntity.ok().body(contents);
     }
 
     @GetMapping("/stats/{userId}")
