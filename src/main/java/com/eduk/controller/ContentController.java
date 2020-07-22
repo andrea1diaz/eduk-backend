@@ -1,6 +1,5 @@
 package com.eduk.controller;
 
-import com.eduk.message.request.VoteForm;
 import com.eduk.message.response.ContentResponse;
 import com.eduk.message.response.StatsResponse;
 import com.eduk.model.*;
@@ -13,29 +12,18 @@ import com.eduk.repository.ViewRepository;
 import com.eduk.repository.VoteRepository;
 import com.eduk.repository.RateRepository;
 import com.eduk.security.utils.AuthenticationUtils;
-import com.eduk.message.response.SuccessfulCreation;
 import com.eduk.message.response.RequestMessages;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.sun.mail.iap.Response;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.cache.support.NullValue;
-import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.util.ReflectionUtils;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Null;
-import javax.websocket.server.PathParam;
-import java.lang.reflect.Field;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -138,7 +126,7 @@ public class ContentController {
         System.out.println("El id es: " + id);
         Optional<List<?>> views = viewRepository.getSubjectViews(id);
         List<?> gviews = new ArrayList<List>();
-        if(!views.isEmpty()){
+        if(views.isPresent()){
             gviews = views.get();
         }
         System.out.println("Los views son: " + views);
@@ -148,12 +136,12 @@ public class ContentController {
         Long totalContents = contentRepository.getTotalContents(id);
         Optional<Double> avg = rateRepository.getAvgRating(id);
         Double avgRating = 0.0;
-        if(!avg.isEmpty()){
+        if(avg.isPresent()){
             avgRating = avg.get();
         }
         Optional<String> fav = viewRepository.getFavSubject(id);
         String favSubject = "-";
-        if(!fav.isEmpty()){
+        if(fav.isPresent()){
             favSubject = fav.get();
         }
         StatsResponse response = new StatsResponse(gviews, totalViews, totalComments, totalVotes,
@@ -197,9 +185,7 @@ public class ContentController {
             Content content2 = content.get();
             content2.setTitle(title);
             content2.setDescription(description);
-            if (subject.isPresent()){
-                content2.setSubject(subject.get());
-            }
+            subject.ifPresent(content2::setSubject);
             content2.setKeywords(keywords);
             content2.setYear(year);
         }
