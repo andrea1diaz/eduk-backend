@@ -188,9 +188,10 @@ public class ContentController {
             subject.ifPresent(content2::setSubject);
             content2.setKeywords(keywords);
             content2.setYear(year);
+            contentRepository.save(content2);
+            return ResponseEntity.ok("Changed");
         }
-        contentRepository.save(content.get());
-        return ResponseEntity.ok("Changed");
+        return ResponseEntity.ok("Error in change");
     }
 	
 		@Transactional
@@ -204,10 +205,6 @@ public class ContentController {
             long comments = commentRepository.deleteByContent(cont);
             long rate = rateRepository.deleteByContent(cont);
             viewRepository.deletebyContent(id);
-//            List<View> views = viewRepository.findAllByContent(cont);
-//            for (int i = 0; i < views.size(); i++) {
-//                viewRepository.delete(views.get(i));
-//            }
             long vote = voteRepository.deleteByContent(cont);
             contentRepository.deleteById(id);
         }

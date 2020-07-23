@@ -30,11 +30,18 @@ public class View implements Serializable {
     })
     private Content content;
 
+    private boolean reported;
+
     public View() {}
 
     public View(User user, Content content) {
         this.user = user;
         this.content = content;
+        this.reported = false;
+    }
+
+    public void report(){
+        this.reported = !this.reported;
     }
 
 }
