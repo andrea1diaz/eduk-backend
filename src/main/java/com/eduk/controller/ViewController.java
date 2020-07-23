@@ -35,12 +35,9 @@ public class ViewController{
         User user = userRepository.findById(userid).get();
         System.out.println(user.getEmail());
         System.out.println(content.getTitle());
-        Optional<View> viewOptional = viewRepository.findByContentAndUser(content, user);
-        if(viewOptional.isPresent()) {
-            View view = viewOptional.get();
-            view.report();
-            viewRepository.save(view);
-        }
+        View view = viewRepository.findByContentAndUser(content, user);
+        view.report();
+        viewRepository.save(view);
         return ResponseEntity.ok("Done");
     }
 }
