@@ -35,13 +35,10 @@ public class ViewController{
         User user = userRepository.findById(userid).get();
         System.out.println(user.getEmail());
         System.out.println(content.getTitle());
-        View view = viewRepository.findByContentAndUser(content, user);
-        viewRepository.updateView(id, userid, !view.getReported());
+        // View view = viewRepository.findByContentAndUser(content, user);
+        viewRepository.updateView(id, userid, true);
         System.out.println("DID IT");
         System.out.println("----------------------------------------");
-        System.out.println(view );
-        view.report();
-        viewRepository.save(view);
         return ResponseEntity.ok("Done");
     }
 }
