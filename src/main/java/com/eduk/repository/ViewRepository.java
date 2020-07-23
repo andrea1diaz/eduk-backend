@@ -22,8 +22,8 @@ public interface ViewRepository extends JpaRepository<View, Long> {
     @Modifying
     @Query(value = "UPDATE" +
             "views" +
-            "SET reported =: value" +
-            "WHERE user_id =: userId AND content_id =: contentId", nativeQuery = true)
+            "SET reported=:value" +
+            "WHERE user_id=:userId AND content_id=:contentId", nativeQuery = true)
     void updateView(@Param("contentId") Long contentId, @Param("userId") Long userId, @Param("value") boolean value);
 
     View findByContentAndUser(Content content, User user);
