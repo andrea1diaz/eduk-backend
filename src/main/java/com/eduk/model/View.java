@@ -44,4 +44,8 @@ public class View implements Serializable {
         this.reported = !this.reported;
     }
 
+    public boolean getReported(){
+        return reported;
+    }
+
 }
