@@ -18,8 +18,7 @@ import javax.transaction.Transactional;
 @Repository
 public interface ViewRepository extends JpaRepository<View, Long> {
 
-    @Transactional
-        Optional<View> findByContentAndUser(Content content, User user);
+    View findByContentAndUser(Content content, User user);
 
     Boolean existsByContentAndUser(Content content, User user);
 
