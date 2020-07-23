@@ -33,6 +33,8 @@ public class ViewController{
         Long userid = Long.valueOf(userId);
         Content content = contentRepository.findById(id).get();
         User user = userRepository.findById(userid).get();
+        System.out.println(user.getEmail());
+        System.out.println(content.getTitle());
         Optional<View> viewOptional = viewRepository.findByContentAndUser(content, user);
         if(viewOptional.isPresent()) {
             View view = viewOptional.get();
