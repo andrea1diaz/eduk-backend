@@ -38,7 +38,7 @@ public interface ViewRepository extends JpaRepository<View, Long> {
             "FROM views WHERE content_id=:id ", nativeQuery = true)
     void deletebyContent(@Param("id") Long id);
 
-    @Query(value = "SELECT s.name, s.title, v.cont " +
+    @Query(value = "SELECT s.title, v.cont " +
             "FROM subjects s, (SELECT subject_id, COUNT(*) AS cont FROM views WHERE user_id=:id " +
             "GROUP BY subject_id) v " +
             "WHERE s.id = v.subject_id", nativeQuery = true)

@@ -82,7 +82,6 @@ public class AuthRestAPIs {
         user.setInstitution(institution);
 
         String strRoles = registerRequest.getRole();
-        System.out.println(strRoles);
 
             if (strRoles.equals("ROLE_TEACHER")) {
 

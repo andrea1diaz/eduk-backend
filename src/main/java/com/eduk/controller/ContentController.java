@@ -59,7 +59,9 @@ public class ContentController {
         Optional<List<Content>> contents;
 
         if (keywords.isPresent()) {
+
             if (keywords.get().isEmpty()) {
+
                 return ResponseEntity.badRequest().body(RequestMessages.QUESTION_KEYWORD_EMPTY);
             }
             contents = contentRepository.getContentByKeywords(keywords.get());
@@ -68,7 +70,7 @@ public class ContentController {
             contents = contentRepository.getContentsAll();
         }
 
-        return ResponseEntity.ok().body("Done");
+        return ResponseEntity.ok().body(contents);
     }
 
     @GetMapping("/user/{userEmail}")
@@ -117,19 +119,17 @@ public class ContentController {
     @GetMapping("/recommendations")
     public ResponseEntity<?> getRecommendations() {
         Optional<List<Content>> contents = contentRepository.getContentsAll();
-        return ResponseEntity.ok().body(contents);
+        return ResponseEntity.ok().body(contents.get());
     }
 
     @GetMapping("/stats/{userId}")
     public ResponseEntity<?> getStats(@PathVariable String userId) {
         Long id = Long.valueOf(userId);
-        System.out.println("El id es: " + id);
         Optional<List<?>> views = viewRepository.getSubjectViews(id);
         List<?> gviews = new ArrayList<List>();
         if(views.isPresent()){
             gviews = views.get();
         }
-        System.out.println("Los views son: " + views);
         Long totalViews = viewRepository.getTotalViews(id);
         Long totalComments = commentRepository.getTotalComments(id);
         Long totalVotes = voteRepository.getTotalVotes(id);

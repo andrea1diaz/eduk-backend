@@ -27,4 +27,7 @@ public class Subject{
     public Subject() {
     }
 
+    public String getTitle() {
+        return title;
+    }
 }
